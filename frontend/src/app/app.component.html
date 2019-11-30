@@ -1,14 +1,14 @@
 <h1>Fuel scanner</h1>
 <div class="graphics">
-  <form>
-    URL: <input type="text" [(ngModel)]="graphic.url">
-    <button type="submit">Send</button>
+  <form (ngSubmit)="sendGraphicUrl()">
+    URL: <input type="text" name="graphic-url" [(ngModel)]="graphic.url">
+    <button>Send</button>
   </form>
+</div>
 
-  <div class="content">
-    <p class="recognized-text" *ngIf="graphic.content">{{graphic.content}}</p>
-    <p class="fuel-amount" *ngIf="graphic.fuelAmount">Fuel amount: {{graphic.fuelAmount}}</p>
-    <p class="fuel-price" *ngIf="graphic.fuelPrice">Fuel price: {{graphic.fuelPrice}}</p>
-    <p class="receipt-value" *ngIf="graphic.receiptValue">Receipt value: {{graphic.receiptValue}}</p>
-  </div>
+<div class="content">
+  <p class="recognized-text" *ngIf="graphic.content">{{graphic.content}}</p>
+  <p class="fuel-amount" *ngIf="graphic.fuelAmount">Fuel amount: {{graphic.fuelAmount}}</p>
+  <p class="fuel-price" *ngIf="graphic.fuelPrice">Fuel price: {{graphic.fuelPrice}}</p>
+  <p class="receipt-value" *ngIf="graphic.receiptValue">Receipt value: {{graphic.receiptValue}}</p>
 </div>
