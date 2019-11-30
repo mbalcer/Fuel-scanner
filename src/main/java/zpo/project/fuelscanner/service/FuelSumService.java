@@ -20,7 +20,7 @@ public class FuelSumService {
 
     @PostConstruct
     public void init() {
-        find();
+
         FuelSum fuelSum = new FuelSum(0l,3.0,150.0);
         fuelSumRepo.save(fuelSum);
     }
@@ -37,14 +37,14 @@ public class FuelSumService {
     public void deleteFuelSum(long id) {
         fuelSumRepo.deleteById(id);
     }
-    public void find() {
-        String line = "DBREF  1A1F A  102  VERVA 98  10 L  SUMA PLN 100 zł GAZ LPG  20 L  SUMA PLN 200 DSAFSADFSADFSADF VERVA 95 30 L  SUMA PLN 300 200";
+    public void find(String line) {
+      //  String line = "DBREF  1A1F A  102  VERVA 98  10 L  SUMA PLN 100 zł GAZ LPG  20 L  SUMA PLN 200 DSAFSADFSADFSADF VERVA 95 30 L  SUMA PLN 300 200";
         //System.out.println(Arrays.toString(getCount(line).toArray()));
         getCount(line).entries().stream().forEach(k->fuelSumRepo.save(new FuelSum(0l,k.getKey(),k.getValue())));
     }
     private static MultiValuedMap<Double,Double> getCount(final String str) {
         final Pattern p = Pattern.compile("\\s?SUMA\\sPLN.?([\\d+]{1,5})",Pattern.DOTALL);
-        final Pattern p2 = Pattern.compile("\\bVERVA 95\\s*([\\d+]{1,5})\\b|\\bVERVA 98\\b\\s*([\\d+]{1,5})|\\bGAZ LPG\\b\\s*([\\d+]{1,5})",Pattern.CASE_INSENSITIVE); // w tym przypadku dodamy wiecej nazw
+        final Pattern p2 = Pattern.compile("\\bOLEJ NAPĘDOWY\\s*([\\d+]{1,5})\\b|\\bVERVA 95\\s*([\\d+]{1,5})\\b|\\bVERVA 98\\b\\s*([\\d+]{1,5})|\\bGAZ LPG\\b\\s*([\\d+]{1,5})",Pattern.CASE_INSENSITIVE); // w tym przypadku dodamy wiecej nazw
 
         final MultiValuedMap<Double,Double> countValues = new ArrayListValuedHashMap<>();
         final Matcher matcher = p.matcher(str);
