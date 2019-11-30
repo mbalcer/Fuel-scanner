@@ -32,3 +32,9 @@ build/
 
 .mvn/
 mvnw*
+
+### FRONTEND ###
+frontend/e2e
+frontend/package-lock.json
+frontend/.editorconfig
+frontend/dist
