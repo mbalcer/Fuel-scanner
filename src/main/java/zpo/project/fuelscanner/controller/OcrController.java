@@ -13,19 +13,20 @@ public class OcrController {
     private OcrService ocrService;
     private GraphicService graphicService;
     private FuelSumService fuelSumService;
+
     @Autowired
-    public OcrController(OcrService ocrService) {
+    public OcrController(OcrService ocrService, GraphicService graphicService, FuelSumService fuelSumService) {
         this.ocrService = ocrService;
+        this.graphicService = graphicService;
+        this.fuelSumService = fuelSumService;
     }
 
-    @PostMapping //@RequestBody Graphic graphic - usunalem #matkuc003 -testuje 
-    public String doOcr() {
-        String content = ocrService.doOcr("https://www.schronisko-piotrkow.pl/wp-content/uploads/2017/06/paragonzapaliwotippi.jpg");
-        //graphic.setContent(content);
-        System.out.println(content);
-//        graphicService.createGraphic(new Graphic(0l,null,content));
+    @PostMapping
+    public Graphic doOcr(@RequestBody Graphic graphic) {
+        String content = ocrService.doOcr(graphic.getUrl());
+        graphic.setContent(content);
+        graphic = graphicService.createGraphic(graphic);
         fuelSumService.find(content);
-        //TODO save to database
-        return content;
+        return graphic;
     }
 }

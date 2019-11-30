@@ -19,8 +19,8 @@ public class GraphicService {
     public Graphic getGraphic(long id) {
         return graphicRepo.getOne(id);
     }
-    public void createGraphic(Graphic graphic) {
-        graphic =  graphicRepo.save(graphic);
+    public Graphic createGraphic(Graphic graphic) {
+        return graphicRepo.save(graphic);
     }
     public void updateGraphic(Graphic graphic) { graphic = graphicRepo.save(graphic); }
     public void deleteGraphic(long id) {
