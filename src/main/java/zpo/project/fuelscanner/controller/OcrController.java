@@ -9,6 +9,7 @@ import zpo.project.fuelscanner.service.OcrService;
 
 @RestController
 @RequestMapping("/api/ocr")
+@CrossOrigin
 public class OcrController {
     private OcrService ocrService;
     private GraphicService graphicService;

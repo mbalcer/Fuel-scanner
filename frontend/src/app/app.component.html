@@ -8,7 +8,7 @@
 
 <div class="content">
   <p class="recognized-text" *ngIf="graphic.content">{{graphic.content}}</p>
-  <p class="fuel-amount" *ngIf="graphic.fuelAmount">Fuel amount: {{graphic.fuelAmount}}</p>
-  <p class="fuel-price" *ngIf="graphic.fuelPrice">Fuel price: {{graphic.fuelPrice}}</p>
-  <p class="receipt-value" *ngIf="graphic.receiptValue">Receipt value: {{graphic.receiptValue}}</p>
+  <p class="fuel-amount" *ngIf="fuelSum.litres">Litres: {{fuelSum.litres}}</p>
+  <p class="fuel-price" *ngIf="fuelSum.cost">Fuel price: {{fuelSum.cost}}</p>
+  <!--<p class="receipt-value" *ngIf="graphic.receiptValue">Receipt value: {{graphic.receiptValue}}</p>-->
 </div>
