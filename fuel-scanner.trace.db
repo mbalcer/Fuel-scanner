@@ -544,3 +544,51 @@ SELEC * FROM FUEL_SUM [42001-200]
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "DELETE *[*] FROM FUEL_SUM"; oczekiwano "identifier"
 Syntax error in SQL statement "DELETE *[*] FROM FUEL_SUM"; expected "identifier"; SQL statement:
 DELETE * FROM FUEL_SUM [42001-200]
+2019-12-01 17:44:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Wartość za długa dla kolumny "CONTENT VARCHAR(255)": "STRINGDECODE('<* [LITHI]\nPolski Koncern Naftowy ORLEN S.A.\n09-411 P\u0141OCK, UL.CHEMIK\u00d3W 7\nSTACJA PALIW NR 0487 W STARE... (513)"
+Value too long for column "CONTENT VARCHAR(255)": "STRINGDECODE('<* [LITHI]\nPolski Koncern Naftowy ORLEN S.A.\n09-411 P\u0141OCK, UL.CHEMIK\u00d3W 7\nSTACJA PALIW NR 0487 W STARE... (513)"; SQL statement:
+insert into graphics (id, content, url) values (null, ?, ?) [22001-200]
+2019-12-01 17:49:54 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE GRAPHICSMODIFY CONTENT[*] VARCHAR(1000)"; oczekiwano "., ADD, SET, RENAME, DROP, ALTER"
+Syntax error in SQL statement "ALTER TABLE GRAPHICSMODIFY CONTENT[*] VARCHAR(1000)"; expected "., ADD, SET, RENAME, DROP, ALTER"; SQL statement:
+ALTER TABLE GRAPHICSMODIFY CONTENT VARCHAR(1000) [42001-200]
+2019-12-01 17:50:04 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE GRAPHICSMODIFY CONTENT[*] VARCHAR(255)"; oczekiwano "., ADD, SET, RENAME, DROP, ALTER"
+Syntax error in SQL statement "ALTER TABLE GRAPHICSMODIFY CONTENT[*] VARCHAR(255)"; expected "., ADD, SET, RENAME, DROP, ALTER"; SQL statement:
+ALTER TABLE GRAPHICSMODIFY CONTENT VARCHAR(255) [42001-200]
+2019-12-01 17:50:10 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE GRAPHICS MODIFY[*] CONTENT VARCHAR(255)"; oczekiwano "., ADD, SET, RENAME, DROP, ALTER"
+Syntax error in SQL statement "ALTER TABLE GRAPHICS MODIFY[*] CONTENT VARCHAR(255)"; expected "., ADD, SET, RENAME, DROP, ALTER"; SQL statement:
+ALTER TABLE GRAPHICS MODIFY CONTENT VARCHAR(255) [42001-200]
+2019-12-01 17:51:46 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE GRAPHICS MODIFY[*] COLUMN CONTENT VARCHAR(255)"; oczekiwano "., ADD, SET, RENAME, DROP, ALTER"
+Syntax error in SQL statement "ALTER TABLE GRAPHICS MODIFY[*] COLUMN CONTENT VARCHAR(255)"; expected "., ADD, SET, RENAME, DROP, ALTER"; SQL statement:
+ALTER TABLE GRAPHICS MODIFY COLUMN CONTENT VARCHAR(255) [42001-200]
+2019-12-01 17:52:41 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE GRAPHICS CHANGE[*] COLUMN CONTENT CONTENT  VARCHAR(255)"; oczekiwano "., ADD, SET, RENAME, DROP, ALTER"
+Syntax error in SQL statement "ALTER TABLE GRAPHICS CHANGE[*] COLUMN CONTENT CONTENT  VARCHAR(255)"; expected "., ADD, SET, RENAME, DROP, ALTER"; SQL statement:
+ALTER TABLE GRAPHICS CHANGE COLUMN CONTENT CONTENT  VARCHAR(255) [42001-200]
+2019-12-01 17:53:12 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE GRAPHICS CHANGE[*] COLUMN CONTENT CONTENT VARCHAR(255)"; oczekiwano "., ADD, SET, RENAME, DROP, ALTER"
+Syntax error in SQL statement "ALTER TABLE GRAPHICS CHANGE[*] COLUMN CONTENT CONTENT VARCHAR(255)"; expected "., ADD, SET, RENAME, DROP, ALTER"; SQL statement:
+ALTER TABLE GRAPHICS CHANGE COLUMN CONTENT CONTENT VARCHAR(255) [42001-200]
+2019-12-01 17:53:45 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE GRAPHICS CHANGE[*] CONTENT CONTENT VARCHAR(255)"; oczekiwano "., ADD, SET, RENAME, DROP, ALTER"
+Syntax error in SQL statement "ALTER TABLE GRAPHICS CHANGE[*] CONTENT CONTENT VARCHAR(255)"; expected "., ADD, SET, RENAME, DROP, ALTER"; SQL statement:
+ALTER TABLE GRAPHICS CHANGE CONTENT CONTENT VARCHAR(255) [42001-200]
+2019-12-01 17:54:12 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE GRAPHICS MODIFY[*] CONTENT VARCHAR(255)"; oczekiwano "., ADD, SET, RENAME, DROP, ALTER"
+Syntax error in SQL statement "ALTER TABLE GRAPHICS MODIFY[*] CONTENT VARCHAR(255)"; expected "., ADD, SET, RENAME, DROP, ALTER"; SQL statement:
+ALTER TABLE GRAPHICS MODIFY CONTENT VARCHAR(255) [42001-200]
+2019-12-01 17:54:51 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE GRAPHICS MODIFY[*] CONTENT VARCHAR(30)"; oczekiwano "., ADD, SET, RENAME, DROP, ALTER"
+Syntax error in SQL statement "ALTER TABLE GRAPHICS MODIFY[*] CONTENT VARCHAR(30)"; expected "., ADD, SET, RENAME, DROP, ALTER"; SQL statement:
+ALTER TABLE graphics MODIFY content VARCHAR(30) [42001-200]
+2019-12-01 17:55:04 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE GRAPHICS MODIFY[*] CONTENT VARCHAR(255)"; oczekiwano "., ADD, SET, RENAME, DROP, ALTER"
+Syntax error in SQL statement "ALTER TABLE GRAPHICS MODIFY[*] CONTENT VARCHAR(255)"; expected "., ADD, SET, RENAME, DROP, ALTER"; SQL statement:
+ALTER TABLE graphics MODIFY content VARCHAR(255) [42001-200]
+2019-12-01 17:57:29 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Wartość za długa dla kolumny "CONTENT VARCHAR(255)": "STRINGDECODE('<* [LITHI]\nPolski Koncern Naftowy ORLEN S.A.\n09-411 P\u0141OCK, UL.CHEMIK\u00d3W 7\nSTACJA PALIW NR 0487 W STARE... (513)"
+Value too long for column "CONTENT VARCHAR(255)": "STRINGDECODE('<* [LITHI]\nPolski Koncern Naftowy ORLEN S.A.\n09-411 P\u0141OCK, UL.CHEMIK\u00d3W 7\nSTACJA PALIW NR 0487 W STARE... (513)"; SQL statement:
+insert into graphics (id, content, url) values (null, ?, ?) [22001-200]
