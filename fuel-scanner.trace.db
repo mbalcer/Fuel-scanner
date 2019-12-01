@@ -540,3 +540,7 @@ SELEC * FROM FUEL_SUM [42001-200]
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "SELEC[*] * FROM FUEL_SUM"; oczekiwano "SET, SAVEPOINT, SCRIPT, SHUTDOWN, SHOW"
 Syntax error in SQL statement "SELEC[*] * FROM FUEL_SUM"; expected "SET, SAVEPOINT, SCRIPT, SHUTDOWN, SHOW"; SQL statement:
 SELEC * FROM FUEL_SUM [42001-200]
+2019-12-01 13:13:50 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "DELETE *[*] FROM FUEL_SUM"; oczekiwano "identifier"
+Syntax error in SQL statement "DELETE *[*] FROM FUEL_SUM"; expected "identifier"; SQL statement:
+DELETE * FROM FUEL_SUM [42001-200]
