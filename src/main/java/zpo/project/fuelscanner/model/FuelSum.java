@@ -1,6 +1,8 @@
 package zpo.project.fuelscanner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -8,39 +10,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class FuelSum {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    Double Litres;
-    Double Cost;
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Double getLitres() {
-        return Litres;
-    }
-
-    public void setLitres(Double litres) {
-        Litres = litres;
-    }
-
-    public Double getCost() {
-        return Cost;
-    }
-
-    public void setCost(Double cost) {
-        Cost = cost;
-    }
-
-
-
+    @JsonIgnore
+    private Long id;
+    private Double Litres;
+    private Double Cost;
 }
