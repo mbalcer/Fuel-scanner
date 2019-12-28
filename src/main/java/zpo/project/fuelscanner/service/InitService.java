@@ -16,7 +16,6 @@ import java.time.LocalDate;
 import java.util.Arrays;
 
 @Service
-@Transactional
 public class InitService {
 
     @Autowired
@@ -27,6 +26,9 @@ public class InitService {
 
     @Autowired
     FuellingRepository fuellingRepository;
+
+    @Autowired
+    FuellingService fuellingService;
 
     @PostConstruct
     public void init() {
@@ -57,7 +59,6 @@ public class InitService {
         fuelSum7 = fuelSumRepo.save(fuelSum7);
         fuelSum8 = fuelSumRepo.save(fuelSum8);
         fuelSum9 = fuelSumRepo.save(fuelSum9);
-
 
         Fuelling fuelling1 = new Fuelling(0L, u1, fuelSum1, LocalDate.now().minusDays(18));
         Fuelling fuelling2 = new Fuelling(0L, u1, fuelSum2, LocalDate.now().minusDays(14));
