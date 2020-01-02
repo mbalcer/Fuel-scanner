@@ -10,6 +10,8 @@ import {LoginPanelComponent} from './login-panel/login-panel.component';
 import {HistoryComponent} from './dashboard/history/history.component';
 import {ScannerComponent} from './dashboard/scanner/scanner.component';
 import {NavigationComponent} from './dashboard/navigation/navigation.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MaterialModule} from "./material-module";
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import {NavigationComponent} from './dashboard/navigation/navigation.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
