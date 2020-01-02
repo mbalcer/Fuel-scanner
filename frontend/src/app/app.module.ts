@@ -7,12 +7,18 @@ import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {LoginPanelComponent} from './login-panel/login-panel.component';
+import {HistoryComponent} from './dashboard/history/history.component';
+import {ScannerComponent} from './dashboard/scanner/scanner.component';
+import {NavigationComponent} from './dashboard/navigation/navigation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    LoginPanelComponent
+    LoginPanelComponent,
+    HistoryComponent,
+    ScannerComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
