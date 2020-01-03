@@ -19,3 +19,8 @@ h1, h3 {
   margin: 1em 10% 0 10%;
   text-align: right;
 }
+
+.table-counter {
+  margin: 0 10%;
+  width: 80%;
+}

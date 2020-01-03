@@ -13,4 +13,21 @@
   <div class="btn-counter">
     <button mat-raised-button color="primary">Zapisz</button>
   </div>
+
+  <h3>Historia stanu licznika</h3>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-counter">
+    <ng-container matColumnDef="counter">
+      <th mat-header-cell *matHeaderCellDef> Licznik </th>
+      <td mat-cell *matCellDef="let element"> {{element.counter}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef> Data </th>
+      <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 </div>
