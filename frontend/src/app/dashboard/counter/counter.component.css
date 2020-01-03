@@ -1,0 +1,21 @@
+:host {
+  width: 80%;
+}
+
+.container-counter {
+  width: 100%;
+}
+
+h1, h3 {
+  text-align: center;
+}
+
+.counter-state, .counter-date {
+  width: 80%;
+  margin: 1em 10% 0 10%;
+}
+
+.btn-counter {
+  margin: 1em 10% 0 10%;
+  text-align: right;
+}
