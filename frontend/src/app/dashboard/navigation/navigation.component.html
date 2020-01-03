@@ -1,4 +1,33 @@
-<ul>
-  <li><a [routerLink]="[{ outlets: { panel: ['scanner'] }}]">Scanner</a></li>
-  <li><a [routerLink]="[{ outlets: { panel: ['history'] }}]">History</a></li>
+<div class="user-info">
+  <div class="icon-user">
+    <mat-icon svgIcon="user" aria-hidden="false" aria-label="user"></mat-icon>
+  </div>
+  <span class="user-name">
+    Witaj {{user}}!
+  </span>
+</div>
+<ul class="menu">
+  <li><a [routerLink]="['/dashboard']">
+    <mat-icon svgIcon="home" aria-hidden="false" aria-label="Home Page"></mat-icon>
+    Strona główna</a></li>
+  <li><a [routerLink]="[{ outlets: { panel: ['scanner'] }}]">
+    <mat-icon svgIcon="scan" aria-hidden="false" aria-label="Scanner"></mat-icon>
+    Skanowanie paragonu</a></li>
+  <li><a [routerLink]="[{ outlets: { panel: ['counter'] }}]">
+    <mat-icon svgIcon="counter" aria-hidden="false" aria-label="counter"></mat-icon>
+    Licznik kilometrów</a></li>
+  <li><a [routerLink]="[{ outlets: { panel: ['history'] }}]">
+    <mat-icon svgIcon="history" aria-hidden="false" aria-label="History"></mat-icon>
+    Historia</a></li>
+  <li><a [routerLink]="[{ outlets: { panel: ['stats'] }}]">
+    <mat-icon svgIcon="stats" aria-hidden="false" aria-label="Stats"></mat-icon>
+    Statystyki</a></li>
+  <li><a [routerLink]="[{ outlets: { panel: ['info'] }}]">
+    <mat-icon svgIcon="info" aria-hidden="false" aria-label="Info"></mat-icon>
+    Informacje</a></li>
+  <li><a><mat-icon svgIcon="signout" aria-hidden="false" aria-label="Sign Out"></mat-icon>
+    Wyloguj się</a></li>
+
+
+
 </ul>

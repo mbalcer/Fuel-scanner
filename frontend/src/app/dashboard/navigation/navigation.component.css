@@ -1,0 +1,48 @@
+.user-info {
+  width: 100%;
+  display:flex;
+  flex-direction: column;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.icon-user>mat-icon {
+  transform: scale(2);
+  margin: 7px 1em 0 1em;
+  color: #FFFFFF;
+  border-radius: 30px;
+  padding: 10px;
+}
+
+.icon-user>mat-icon:hover {
+  background-color: #566a7f;
+}
+
+.user-name {
+  font-size: 32px;
+  margin-top: 0.75em;
+}
+
+ul.menu {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+ul.menu > li {
+  width: 100%;
+  list-style-type: none;
+  margin: 1.5em 1em 0 1em;
+}
+
+ul.menu > li > a {
+  color: #FFFFFF;
+  font-size: 24px;
+  text-decoration: none;
+}
+
+ul.menu > li:hover > a {
+  width: 100%;
+  color: #1abc9c;
+}

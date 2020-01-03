@@ -12,6 +12,10 @@ import {ScannerComponent} from './dashboard/scanner/scanner.component';
 import {NavigationComponent} from './dashboard/navigation/navigation.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from "./material-module";
+import {CounterComponent} from './dashboard/counter/counter.component';
+import {StatsComponent} from './dashboard/stats/stats.component';
+import {InformationComponent} from './dashboard/information/information.component';
+import {HomePageComponent} from './dashboard/home-page/home-page.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,11 @@ import {MaterialModule} from "./material-module";
     LoginPanelComponent,
     HistoryComponent,
     ScannerComponent,
-    NavigationComponent
+    NavigationComponent,
+    CounterComponent,
+    StatsComponent,
+    InformationComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,

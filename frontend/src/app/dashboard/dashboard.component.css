@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.navigation {
+  width: 20%;
+  background-color: #34495e;
+  color: #FFFFFF;
+  height: 100vh;
+}
