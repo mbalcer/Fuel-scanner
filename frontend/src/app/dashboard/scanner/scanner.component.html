@@ -1,1 +1,30 @@
-<p>scanner works!</p>
+<div class="container-scanner">
+  <h1>Skanowanie paragonu</h1>
+  <div class="scanner">
+    <mat-form-field class="url-receipt">
+      <input matInput placeholder="Wpisz adres url zdjęcia paragonu">
+    </mat-form-field>
+    <p class="or">lub</p>
+    
+    <div class="upload-file">
+      <label for="file">Wrzuć zdjęcie paragonu z dysku</label>
+      <button type="button" mat-raised-button (click)="fileInput.click()" class="btn-upload-file">Wybierz plik</button>
+      <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file">
+    </div>
+
+    <div class="btn-scanner">
+      <button mat-raised-button color="primary">Skanuj</button>
+    </div>
+
+    <div class="recognize-list" *ngIf="recognizedText.date != null">
+      <h2>Rozpoznano: </h2>
+      <mat-list role="list">
+        <mat-list-item role="listitem">Data paragonu: {{recognizedText.date}}</mat-list-item>
+        <mat-list-item role="listitem">Ilość zatankowanych litrów: {{recognizedText.litres}}</mat-list-item>
+        <mat-list-item role="listitem">Cena za litr: {{recognizedText.costPerLitre}}</mat-list-item>
+        <mat-list-item role="listitem">Cena za całość: {{recognizedText.costForAll}}</mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+  <div class="recognized-text"></div>
+</div>

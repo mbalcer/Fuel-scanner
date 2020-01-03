@@ -1,0 +1,33 @@
+:host {
+  width: 80%;
+}
+
+.container-scanner {
+  width: 100%;
+}
+
+h1, .or {
+  text-align: center;
+}
+
+.url-receipt {
+  width: 80%;
+  margin: 0 10%;
+}
+
+.upload-file {
+  margin: 0 10%;
+}
+
+.btn-upload-file {
+  margin-left: 1em;
+}
+
+.btn-scanner {
+  margin: 0 10%;
+  text-align: right;
+}
+
+.recognize-list {
+  margin: 3em 10%;
+}
