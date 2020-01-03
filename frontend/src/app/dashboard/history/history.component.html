@@ -1,1 +1,21 @@
-<p>history works!</p>
+<div class="container-history">
+  <h1>Historia zeskanowanych paragonów</h1>
+  <mat-accordion>
+    <mat-expansion-panel class="history-panel" *ngFor="let receipt of dataSource">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Data: {{receipt.date}}
+        </mat-panel-title>
+        <mat-panel-description>
+          Cena za paliwo: {{receipt.costForAll}} zł
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-list role="list">
+        <mat-list-item role="listitem">Data paragonu: {{receipt.date}}</mat-list-item>
+        <mat-list-item role="listitem">Ilość zatankowanych litrów: {{receipt.litres}} l</mat-list-item>
+        <mat-list-item role="listitem">Cena za litr: {{receipt.costPerLitre}} zł</mat-list-item>
+        <mat-list-item role="listitem">Cena za całość: {{receipt.costForAll}} zł</mat-list-item>
+      </mat-list>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
