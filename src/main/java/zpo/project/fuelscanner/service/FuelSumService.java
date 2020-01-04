@@ -45,7 +45,7 @@ public class FuelSumService {
     private static MultiValuedMap<Double,Double> getCount(final String str) {
         final Pattern finalPrice = Pattern.compile("\\s*PLN.?([\\d+]{1,5}\\.?[\\d]{0,5})",Pattern.DOTALL);
 
-        final Pattern litres = Pattern.compile("\\b\\S?LEJ \\S?AP\\S?DOW\\D*\\(?\\d?\\)?\\s*\\D*([\\d+]{1,5}\\.?[\\d]{0,5})\\b|\\bVERVA 95\\D*\\(?\\d?\\)?\\s*\\D*([\\d+]{1,5}\\.?[\\d]{0,5})\\b|\\bDIESEL\\D*\\(?\\d?\\)?\\s*\\D*([\\d+]{1,5}\\.?[\\d]{0,5})\\b|\\bVERVA 98\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bBENZYNA\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bGAZ LPG\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})"); // w tym przypadku dodamy wiecej nazw
+        final Pattern litres = Pattern.compile("\\b\\S?LEJ \\S?AP\\S?DOW\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bVERVA 95\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bDIESEL\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bVERVA 98\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bBENZYNA\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bGAZ LPG\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})"); // w tym przypadku dodamy wiecej nazw
         final Pattern pricePerLitres = Pattern.compile("[x+]+\\s*([\\d+]{1,5}\\.?[\\d]{0,5})",Pattern.CASE_INSENSITIVE);
         final MultiValuedMap<Double,Double> countValues = new ArrayListValuedHashMap<>();
         final Matcher matcher = finalPrice.matcher(str); //price
