@@ -19,7 +19,7 @@ public class FuelSum {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private Long id;
-    private Double Litres;
-    private Double priceperLitres;
-    private Double Cost;
+    private Double litres;
+    private Double pricePerLitres;
+    private Double cost;
 }
