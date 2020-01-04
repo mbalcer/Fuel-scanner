@@ -5,19 +5,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "graphics")
-public class Graphic {
+@NoArgsConstructor
+@Entity
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private Long id;
-    private String url;
-    @Column(columnDefinition="varchar(1000)")
-    private String content;
+    private String login;
+    private String name;
+    private String password;
+    private String email;
 }
