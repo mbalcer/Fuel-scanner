@@ -1577,3 +1577,7 @@ Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Studia/V_
 	at org.h2.mvstore.FileStore.open(FileStore.java:172)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:381)
 	... 124 more
+2020-01-04 15:17:28 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Wartość za długa dla kolumny "CONTENT VARCHAR(255)": "STRINGDECODE('<* [LITHI]\nPolski Koncern Naftowy ORLEN S.A.\n09-411 P\u0141OCK, UL.CHEMIK\u00d3W 7\nSTACJA PALIW NR 0487 W STARE... (513)"
+Value too long for column "CONTENT VARCHAR(255)": "STRINGDECODE('<* [LITHI]\nPolski Koncern Naftowy ORLEN S.A.\n09-411 P\u0141OCK, UL.CHEMIK\u00d3W 7\nSTACJA PALIW NR 0487 W STARE... (513)"; SQL statement:
+insert into graphics (id, content, url) values (null, ?, ?) [22001-200]

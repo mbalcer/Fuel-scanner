@@ -20,5 +20,6 @@ public class FuelSum {
     @JsonIgnore
     private Long id;
     private Double Litres;
+    private Double priceperLitres;
     private Double Cost;
 }

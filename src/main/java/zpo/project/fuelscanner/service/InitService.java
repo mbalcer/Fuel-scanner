@@ -40,15 +40,15 @@ public class InitService {
         u2 = userRepository.save(u2);
         u3 = userRepository.save(u3);
 
-        FuelSum fuelSum1 = new FuelSum(0L, 10.05, 51.54);
-        FuelSum fuelSum2 = new FuelSum(0L, 8.95, 42.46);
-        FuelSum fuelSum3 = new FuelSum(0L, 20.12, 102.57);
-        FuelSum fuelSum4 = new FuelSum(0L, 15.45, 68.95);
-        FuelSum fuelSum5 = new FuelSum(0L, 22.34, 120.12);
-        FuelSum fuelSum6 = new FuelSum(0L, 6.97, 34.07);
-        FuelSum fuelSum7 = new FuelSum(0L, 18.23, 88.39);
-        FuelSum fuelSum8 = new FuelSum(0L, 15.13, 65.85);
-        FuelSum fuelSum9 = new FuelSum(0L, 25.92, 127.39);
+        FuelSum fuelSum1 = new FuelSum(0L, 10.05,null, 51.54);
+        FuelSum fuelSum2 = new FuelSum(0L, 8.95,null, 42.46);
+        FuelSum fuelSum3 = new FuelSum(0L, 20.12,null, 102.57);
+        FuelSum fuelSum4 = new FuelSum(0L, 15.45,null, 68.95);
+        FuelSum fuelSum5 = new FuelSum(0L, 22.34,null, 120.12);
+        FuelSum fuelSum6 = new FuelSum(0L, 6.97,null, 34.07);
+        FuelSum fuelSum7 = new FuelSum(0L, 18.23,null, 88.39);
+        FuelSum fuelSum8 = new FuelSum(0L, 15.13,null, 65.85);
+        FuelSum fuelSum9 = new FuelSum(0L, 25.92,null, 127.39);
 
         fuelSum1 = fuelSumRepo.save(fuelSum1);
         fuelSum2 = fuelSumRepo.save(fuelSum2);
