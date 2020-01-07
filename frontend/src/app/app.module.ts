@@ -16,6 +16,7 @@ import {CounterComponent} from './dashboard/counter/counter.component';
 import {StatsComponent} from './dashboard/stats/stats.component';
 import {InformationComponent} from './dashboard/information/information.component';
 import {HomePageComponent} from './dashboard/home-page/home-page.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {HomePageComponent} from './dashboard/home-page/home-page.component';
     CounterComponent,
     StatsComponent,
     InformationComponent,
-    HomePageComponent
+    HomePageComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
