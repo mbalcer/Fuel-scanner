@@ -7,6 +7,7 @@ import zpo.project.fuelscanner.model.User;
 import zpo.project.fuelscanner.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -31,5 +32,13 @@ public class UserService {
 
     public void deleteUser(long id) {
         userRepository.deleteById(id);
+    }
+
+    public boolean checkLogin(String login){
+        return !userRepository.findByLogin(login).isPresent();
+    }
+
+    public Optional<User> checkUser(String login, String password){
+        return userRepository.findUser(login, password);
     }
 }
