@@ -1,12 +1,15 @@
-<div class="background"></div>
+<div class="background">
 
-<div class="form">
-    <div class="title">FUEL SCANNER</div>
+  <div class="form">
+      <div class="title">FUEL SCANNER</div>
+
+      <form name="form">
+          <input type="text" placeholder="Login"/>
+          <input type="password" placeholder="Password"/>
+          <a [routerLink]="['/dashboard']"><button>LOG IN</button></a>
+      </form>
+
     <p>If you do not have account, just <strong>sign up!</strong></p>
+  </div>
 
-    <form name="form">
-        <input type="text" placeholder="Login"/>
-        <input type="password" placeholder="Password"/>
-        <a [routerLink]="['/dashboard']"><button>LOG IN</button></a>
-    </form>
 </div>
