@@ -10,7 +10,7 @@ h1, h3 {
   text-align: center;
 }
 
-.counter-state, .counter-date {
+.counter-state, .counter-date, .fuel {
   width: 80%;
   margin: 1em 10% 0 10%;
 }

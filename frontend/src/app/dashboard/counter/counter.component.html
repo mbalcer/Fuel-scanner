@@ -10,6 +10,10 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
+  <mat-form-field class="fuel">
+    <input matInput placeholder="Wpisz ilość paliwa pozostałą w baku">
+  </mat-form-field>
+
   <div class="btn-counter">
     <button mat-raised-button color="primary">Zapisz</button>
   </div>
@@ -25,6 +29,11 @@
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef> Data </th>
       <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fuel">
+      <th mat-header-cell *matHeaderCellDef> Paliwo </th>
+      <td mat-cell *matCellDef="let element"> {{element.fuel}} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
