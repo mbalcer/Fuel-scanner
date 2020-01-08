@@ -1,0 +1,17 @@
+:host {
+  width: 80%;
+}
+
+.container-information {
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
+}
+
+.question-answer, .authors {
+  width: 80%;
+  margin: 0 10%;
+  text-align: justify;
+}
