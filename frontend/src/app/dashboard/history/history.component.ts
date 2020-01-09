@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {FuelSumService} from "../../service/fuel-sum.service";
+import {FuelSum} from "../../model/fuel-sum";
 
 @Component({
   selector: 'app-history',
@@ -6,9 +8,12 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./history.component.css']
 })
 export class HistoryComponent implements OnInit {
-  dataSource = EXAMPLE_DATA;
-
-  constructor() { }
+  dataSource : FuelSum[] = [];
+  constructor(private fuelSumService: FuelSumService) {
+    fuelSumService.getAllFuel().subscribe(n => {
+      this.dataSource = n;
+    });
+  }
 
   ngOnInit() {
   }
