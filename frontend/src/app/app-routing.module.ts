@@ -8,6 +8,7 @@ import {CounterComponent} from "./dashboard/counter/counter.component";
 import {StatsComponent} from "./dashboard/stats/stats.component";
 import {InformationComponent} from "./dashboard/information/information.component";
 import {HomePageComponent} from "./dashboard/home-page/home-page.component";
+import { RegistrationComponent } from "./registration/registration.component";
 
 const routes: Routes = [
   {
@@ -49,6 +50,10 @@ const routes: Routes = [
   {
     path: '',
     component: LoginPanelComponent,
+  },
+  {
+    path: 'registration',
+    component: RegistrationComponent,
   }
 ];
 
