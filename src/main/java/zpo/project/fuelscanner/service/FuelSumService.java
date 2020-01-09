@@ -45,7 +45,8 @@ public class FuelSumService {
     private static MultiValuedMap<Double,Double> getCount(final String str) {
         final Pattern finalPrice = Pattern.compile("\\s*PLN.?([\\d+]{1,5}\\.?[\\d]{0,5})",Pattern.DOTALL);
 
-        final Pattern litres = Pattern.compile("\\b\\S?LEJ \\S?AP\\S?DOW\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bVERVA 95\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bDIESEL\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bVERVA 98\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bBENZYNA\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bGAZ LPG\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})"); // w tym przypadku dodamy wiecej nazw
+        //final Pattern litres = Pattern.compile("\\b\\S?LEJ \\S?AP\\S?DOW\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bVERVA 95\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bDIESEL\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bVERVA 98\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bBENZYNA\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bGAZ LPG\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})"); // w tym przypadku dodamy wiecej nazw
+        final Pattern litres = Pattern.compile("([\\d+]{1,5}\\.?[\\d]{0,5})\\s?[L]?\\s?[x+]+",Pattern.CASE_INSENSITIVE);
         final Pattern pricePerLitres = Pattern.compile("[x+]+\\s*([\\d+]{1,5}\\.?[\\d]{0,5})",Pattern.CASE_INSENSITIVE);
         final MultiValuedMap<Double,Double> countValues = new ArrayListValuedHashMap<>();
         final Matcher matcher = finalPrice.matcher(str); //price
@@ -53,7 +54,9 @@ public class FuelSumService {
         final Matcher matcher3 = pricePerLitres.matcher(str); //pricePerLitres
         while (matcher2.find() && matcher3.find()) {
             System.out.println(matcher3.group());
-            countValues.put(Double.parseDouble(matcher2.group().replaceAll("\\b\\S?LEJ \\S?AP\\S?DOW\\D*\\(?\\d?\\)?\\s*\\D*\\b|\\bBENZYNA\\D*\\(?\\d?\\)?\\s*\\D*\\b|\\bVERVA 98\\D*\\(?\\d?\\)?\\s*\\D*\\b|\\bDIESEL\\D*\\(?\\d?\\)?\\s*\\D*\\b|\\bGAZ LPG\\D*\\(?\\d?\\)?\\s*\\D*\\b\\b|\\bVERVA 95\\D*\\(?\\d?\\)?\\s*\\D*\\b","")),Double.parseDouble(matcher3.group(1)));// w tym przypadku dodamy wiecej nazw
+           // countValues.put(Double.parseDouble(matcher2.group().replaceAll("\\b\\S?LEJ \\S?AP\\S?DOW\\D*\\(?\\d?\\)?\\s*\\D*\\b|\\bBENZYNA\\D*\\(?\\d?\\)?\\s*\\D*\\b|\\bVERVA 98\\D*\\(?\\d?\\)?\\s*\\D*\\b|\\bDIESEL\\D*\\(?\\d?\\)?\\s*\\D*\\b|\\bGAZ LPG\\D*\\(?\\d?\\)?\\s*\\D*\\b\\b|\\bVERVA 95\\D*\\(?\\d?\\)?\\s*\\D*\\b","")),Double.parseDouble(matcher3.group(1)));// w tym przypadku dodamy wiecej nazw
+             countValues.put(Double.parseDouble(matcher2.group().replaceAll("\\s?[L]?\\s?[x+]+","")),Double.parseDouble(matcher3.group(1)));
+
         }
         return countValues;
     }
