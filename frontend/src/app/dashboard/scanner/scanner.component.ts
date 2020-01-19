@@ -3,6 +3,7 @@ import {Graphic} from "../../model/graphic";
 import {FuelSum} from "../../model/fuel-sum";
 import {GraphicService} from "../../service/graphic.service";
 import {FuelSumService} from "../../service/fuel-sum.service";
+import {FileUploadService} from "../../service/file-upload.service";
 
 @Component({
   selector: 'app-scanner',
@@ -13,8 +14,9 @@ export class ScannerComponent implements OnInit {
 
   graphic: Graphic;
   fuelSum: FuelSum;
+  fileToUpload: File;
 
-  constructor(private graphicService: GraphicService, private fuelService: FuelSumService) {
+  constructor(private graphicService: GraphicService, private fuelService: FuelSumService, private fileService: FileUploadService) {
     this.graphic = {
       url: '',
       content: ''
@@ -23,17 +25,27 @@ export class ScannerComponent implements OnInit {
       litres: null,
       pricePerLitres: null,
       cost: null
-    }
+    };
+    this.fileToUpload = null;
   }
 
   ngOnInit() {
   }
 
-  sendGraphicUrl() {
-    this.graphicService.saveRoom(this.graphic).subscribe(n => {
-      this.graphic = n;
-      this.readFuelSum();
-    });
+  scanReceipt() {
+    if (this.graphic.url != '') {
+      this.graphicService.saveRoom(this.graphic).subscribe(n => {
+        this.graphic = n;
+        this.readFuelSum();
+      });
+    } else if (this.fileToUpload != null) {
+        this.fileService.uploadFile(this.fileToUpload).subscribe(data => {
+          console.log(data);
+          this.readFuelSum();
+        });
+    } else {
+      console.log("error");
+    }
   }
 
   readFuelSum() {
@@ -42,8 +54,8 @@ export class ScannerComponent implements OnInit {
     });
   }
 
-  onFileSelected(event) {
-    console.log(event);
+  onFileSelected(files : FileList) {
+    this.fileToUpload = files.item(0);
   }
 
 }

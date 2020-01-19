@@ -9,11 +9,11 @@
     <div class="upload-file">
       <label for="file">Wrzuć zdjęcie paragonu z dysku</label>
       <button type="button" mat-raised-button (click)="fileInput.click()" class="btn-upload-file">Wybierz plik</button>
-      <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file">
+      <input hidden (change)="onFileSelected($event.target.files)" #fileInput type="file" id="file">
     </div>
 
     <div class="btn-scanner">
-      <button mat-raised-button color="primary" (click)="sendGraphicUrl()">Skanuj</button>
+      <button mat-raised-button color="primary" (click)="scanReceipt()">Skanuj</button>
     </div>
 
     <div class="recognize-list" *ngIf="fuelSum.cost != null">
