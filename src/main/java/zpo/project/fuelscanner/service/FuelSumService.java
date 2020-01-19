@@ -9,6 +9,8 @@ import zpo.project.fuelscanner.model.FuelSum;
 import zpo.project.fuelscanner.repository.FuelSumRepo;
 
 import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,7 +42,14 @@ public class FuelSumService {
     public void find(String line) {
       //  String line = "DBREF  1A1F A  102  VERVA 98  10 L  SUMA PLN 100 zł GAZ LPG  20 L  SUMA PLN 200 DSAFSADFSADFSADF VERVA 95 30 L  SUMA PLN 300 200";
         //System.out.println(Arrays.toString(getCount(line).toArray()));
-        getCount(line).entries().stream().forEach(k->fuelSumRepo.save(new FuelSum(0l,k.getKey(),k.getValue(),(k.getKey()*k.getValue()))));
+        getCount(line).entries()
+                .stream()
+                .forEach(k-> {
+                            Double cost = BigDecimal.valueOf(k.getKey() * k.getValue())
+                                    .setScale(2, RoundingMode.FLOOR)
+                                    .doubleValue();
+                            fuelSumRepo.save(new FuelSum(0l, k.getKey(), k.getValue(), cost));
+                        });
     }
     private static MultiValuedMap<Double,Double> getCount(final String str) {
         final Pattern finalPrice = Pattern.compile("\\s*PLN.?([\\d+]{1,5}\\.?[\\d]{0,5})",Pattern.DOTALL);
