@@ -8,7 +8,7 @@ import {Observable} from "rxjs";
 })
 export class GraphicService {
   private MAIN_URL = "http://localhost:8080/api/ocr";
-  private POST_GRAPHIC_URL = `${this.MAIN_URL}`;
+  private POST_GRAPHIC_URL = `${this.MAIN_URL}/url`;
 
   constructor(private http: HttpClient) { }
 
