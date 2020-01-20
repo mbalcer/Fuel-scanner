@@ -35,13 +35,14 @@ export class ScannerComponent implements OnInit {
   scanReceipt() {
     if (this.graphic.url != '') {
       this.graphicService.saveRoom(this.graphic).subscribe(n => {
-        this.graphic = n;
+        this.graphic.url = '';
         this.readFuelSum();
       });
     } else if (this.fileToUpload != null) {
         this.fileService.uploadFile(this.fileToUpload).subscribe(data => {
           console.log(data);
           this.readFuelSum();
+          this.fileToUpload = null;
         });
     } else {
       console.log("error");
