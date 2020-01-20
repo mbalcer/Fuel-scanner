@@ -38,3 +38,6 @@ frontend/e2e
 frontend/package-lock.json
 frontend/.editorconfig
 frontend/dist
+
+
+src/main/resources/files/
