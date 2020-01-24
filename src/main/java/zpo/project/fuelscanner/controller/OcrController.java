@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import zpo.project.fuelscanner.model.Receipt;
-import zpo.project.fuelscanner.repository.UserRepository;
 import zpo.project.fuelscanner.service.OcrService;
 import zpo.project.fuelscanner.service.FileService;
 import zpo.project.fuelscanner.service.ReceiptService;
@@ -75,10 +74,10 @@ public class OcrController {
         //For testing: receipt is owned by User1
         //Later change: receipt is owned by logged user
         Receipt receipt = receiptService.createReceipt(
-                new Receipt(0L, "", "", LocalDate.now(), 0.0, 0.0, 0.0,
+                new Receipt(0L, "", content, LocalDate.now(), 0.0, 0.0, 0.0,
                         userService.getUser(1L)));
 
-        receiptService.find(receipt);
+        receipt = receiptService.find(receipt);
         receiptService.updateReceipt(receipt);
 
         return new ResponseEntity<String>(file.getOriginalFilename(), HttpStatus.OK);
