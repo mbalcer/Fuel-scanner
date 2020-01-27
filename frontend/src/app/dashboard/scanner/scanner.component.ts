@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Graphic} from "../../model/graphic";
-import {FuelSum} from "../../model/fuel-sum";
-import {GraphicService} from "../../service/graphic.service";
-import {FuelSumService} from "../../service/fuel-sum.service";
-import {FileUploadService} from "../../service/file-upload.service";
+
+import {Receipt} from "../../model/receipt";
+import {OcrService} from "../../service/ocr.service";
 
 @Component({
   selector: 'app-scanner',
@@ -12,19 +10,24 @@ import {FileUploadService} from "../../service/file-upload.service";
 })
 export class ScannerComponent implements OnInit {
 
-  graphic: Graphic;
-  fuelSum: FuelSum;
+  receipt: Receipt;
   fileToUpload: File;
+  url: string;
 
-  constructor(private graphicService: GraphicService, private fuelService: FuelSumService, private fileService: FileUploadService) {
-    this.graphic = {
+  constructor(private ocrService: OcrService) {
+    this.receipt = {
       url: '',
-      content: ''
-    };
-    this.fuelSum = {
+      content: '',
+      receiptLocalDate: '',
       litres: null,
       pricePerLitres: null,
-      cost: null
+      cost: null,
+      user: {
+        login: '',
+        name: '',
+        password: '',
+        email: ''
+      }
     };
     this.fileToUpload = null;
   }
@@ -33,26 +36,19 @@ export class ScannerComponent implements OnInit {
   }
 
   scanReceipt() {
-    if (this.graphic.url != '') {
-      this.graphicService.saveRoom(this.graphic).subscribe(n => {
-        this.graphic.url = '';
-        this.readFuelSum();
+    if (this.url != '') {
+      this.ocrService.scanReceipt(this.url).subscribe(n => {
+        this.receipt = n;
+        this.url = '';
       });
     } else if (this.fileToUpload != null) {
-        this.fileService.uploadFile(this.fileToUpload).subscribe(data => {
+        this.ocrService.uploadFile(this.fileToUpload).subscribe(data => {
           console.log(data);
-          this.readFuelSum();
           this.fileToUpload = null;
         });
     } else {
       console.log("error");
     }
-  }
-
-  readFuelSum() {
-    this.fuelService.getLastFuel().subscribe(n => {
-      this.fuelSum = n;
-    });
   }
 
   onFileSelected(files : FileList) {

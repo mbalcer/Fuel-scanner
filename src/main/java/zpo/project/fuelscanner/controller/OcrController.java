@@ -45,12 +45,14 @@ public class OcrController {
 //    }
 
     @PostMapping("/url")
-    public Receipt doOcr(@RequestBody Receipt receipt) {
+    public Receipt doOcr(@RequestBody String url) {
+        Receipt receipt = new Receipt();
+        receipt.setUrl(url);
         String content = ocrService.doOcr(receipt.getUrl());
         receipt.setContent(content);
-        receipt = receiptService.createReceipt(receipt);
         receipt = receiptService.find(receipt);
-        receiptService.updateReceipt(receipt);
+        receipt = receiptService.createReceipt(receipt);
+
         return receipt;
     }
 

@@ -2,7 +2,7 @@
   <h1>Skanowanie paragonu</h1>
   <div class="scanner">
     <mat-form-field class="url-receipt">
-      <input matInput placeholder="Wpisz adres url zdjęcia paragonu" [(ngModel)]="graphic.url">
+      <input matInput placeholder="Wpisz adres url zdjęcia paragonu" [(ngModel)]="url">
     </mat-form-field>
     <p class="or">lub</p>
     
@@ -17,13 +17,13 @@
       <button mat-raised-button color="primary" (click)="scanReceipt()">Skanuj</button>
     </div>
 
-    <div class="recognize-list" *ngIf="fuelSum.pricePerLitres != null">
+    <div class="recognize-list" *ngIf="receipt.pricePerLitres != null">
       <h2>Rozpoznano: </h2>
       <mat-list role="list">
         <mat-list-item role="listitem">Data paragonu: brak</mat-list-item>
-        <mat-list-item role="listitem">Ilość zatankowanych litrów: {{fuelSum.litres}}</mat-list-item>
-        <mat-list-item role="listitem">Cena za litr: {{fuelSum.pricePerLitres}}</mat-list-item>
-        <mat-list-item role="listitem">Cena za całość: {{fuelSum.cost}}</mat-list-item>
+        <mat-list-item role="listitem">Ilość zatankowanych litrów: {{receipt.litres}}</mat-list-item>
+        <mat-list-item role="listitem">Cena za litr: {{receipt.pricePerLitres}}</mat-list-item>
+        <mat-list-item role="listitem">Cena za całość: {{receipt.cost}}</mat-list-item>
       </mat-list>
     </div>
   </div>

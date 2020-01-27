@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {FuelSumService} from "../../service/fuel-sum.service";
-import {FuelSum} from "../../model/fuel-sum";
+import {Receipt} from "../../model/receipt";
+import {ReceiptService} from "../../service/receipt.service";
 
 @Component({
   selector: 'app-history',
@@ -8,8 +8,8 @@ import {FuelSum} from "../../model/fuel-sum";
   styleUrls: ['./history.component.css']
 })
 export class HistoryComponent implements OnInit {
-  dataSource : FuelSum[] = [];
-  constructor(private fuelSumService: FuelSumService) {
+  dataSource : Receipt[] = [];
+  constructor(private fuelSumService: ReceiptService) {
     fuelSumService.getAllFuel().subscribe(n => {
       this.dataSource = n;
     });
