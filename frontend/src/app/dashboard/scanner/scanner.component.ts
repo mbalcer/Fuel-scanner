@@ -13,6 +13,7 @@ export class ScannerComponent implements OnInit {
   receipt: Receipt;
   fileToUpload: File;
   url: string;
+  progress: boolean;
 
   constructor(private ocrService: OcrService) {
     this.receipt = {
@@ -31,23 +32,25 @@ export class ScannerComponent implements OnInit {
     };
     this.fileToUpload = null;
     this.url = '';
+    this.progress = false;
   }
 
   ngOnInit() {
   }
 
   scanReceipt() {
+    this.progress = true;
     if (this.url != '') {
-        console.log(this.url);
-      this.ocrService.scanReceipt(this.url).subscribe(n => {
-        this.receipt = n;
+      this.ocrService.scanReceipt(this.url).subscribe(data => {
+        this.receipt = data;
         this.url = '';
+        this.progress = false;
       });
     } else if (this.fileToUpload != null) {
         this.ocrService.uploadFile(this.fileToUpload).subscribe(data => {
-          console.log(data);
           this.receipt = data;
           this.fileToUpload = null;
+          this.progress = false;
         });
     } else {
       console.log("error");

@@ -26,6 +26,12 @@ h1, .or {
 .btn-scanner {
   margin: 0 10%;
   text-align: right;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.btn-scanner > button {
+  margin-left: 1em;
 }
 
 .recognize-list {

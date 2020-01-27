@@ -15,6 +15,7 @@
 
     <div class="btn-scanner">
       <button mat-raised-button color="primary" (click)="scanReceipt()">Skanuj</button>
+      <mat-progress-spinner mode="indeterminate" color="primary" *ngIf="progress" diameter="35"></mat-progress-spinner>
     </div>
 
     <div class="recognize-list" *ngIf="receipt.pricePerLitres != null">
