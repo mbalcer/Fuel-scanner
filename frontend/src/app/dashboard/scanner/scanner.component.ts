@@ -30,6 +30,7 @@ export class ScannerComponent implements OnInit {
       }
     };
     this.fileToUpload = null;
+    this.url = '';
   }
 
   ngOnInit() {
@@ -37,6 +38,7 @@ export class ScannerComponent implements OnInit {
 
   scanReceipt() {
     if (this.url != '') {
+        console.log(this.url);
       this.ocrService.scanReceipt(this.url).subscribe(n => {
         this.receipt = n;
         this.url = '';
@@ -44,6 +46,7 @@ export class ScannerComponent implements OnInit {
     } else if (this.fileToUpload != null) {
         this.ocrService.uploadFile(this.fileToUpload).subscribe(data => {
           console.log(data);
+          this.receipt = data;
           this.fileToUpload = null;
         });
     } else {

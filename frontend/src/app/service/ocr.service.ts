@@ -13,15 +13,15 @@ export class OcrService {
 
   constructor(private http: HttpClient) { }
 
-  uploadFile(file: File): Observable<HttpEvent<{}>> {
+  uploadFile(file: File): Observable<Receipt> {
     const formdata: FormData = new FormData();
     formdata.append('file', file);
-    const req = new HttpRequest('POST', this.UPLOAD_FILE_URL, formdata, {
-      reportProgress: true,
-      responseType: 'text'
-    });
+    // const req = new HttpRequest('POST', this.UPLOAD_FILE_URL, formdata, {
+    //   reportProgress: true,
+    //   responseType: 'text'
+    // });
 
-    return this.http.request(req);
+    return this.http.post<Receipt>(this.UPLOAD_FILE_URL, formdata);
   }
 
   scanReceipt(url: string): Observable<Receipt> {

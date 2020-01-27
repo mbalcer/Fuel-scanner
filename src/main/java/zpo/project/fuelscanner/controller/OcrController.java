@@ -68,7 +68,7 @@ public class OcrController {
 //    }
 
     @PostMapping("/file")
-    public ResponseEntity<String> doOcr(@RequestParam("file") MultipartFile file) throws IOException {
+    public Receipt doOcr(@RequestParam("file") MultipartFile file) throws IOException {
         InputStream inputStream = file.getInputStream();
         File localFile = fileService.copyFile(inputStream);
         String content = ocrService.doOcr(localFile);
@@ -82,6 +82,6 @@ public class OcrController {
         receipt = receiptService.find(receipt);
         receiptService.updateReceipt(receipt);
 
-        return new ResponseEntity<String>(file.getOriginalFilename(), HttpStatus.OK);
+        return receipt;
     }
 }
