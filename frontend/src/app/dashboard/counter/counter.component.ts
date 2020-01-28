@@ -1,4 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import {Counter} from "../../model/counter";
+import {CounterService} from "../../service/counter.service";
+import {User} from "../../model/user";
 
 @Component({
   selector: 'app-counter',
@@ -9,9 +12,36 @@ export class CounterComponent implements OnInit {
   displayedColumns: string[] = ['counter', 'date', 'fuel'];
   dataSource = EXAMPLE_DATA;
 
-  constructor() { }
+  user: User = {
+    login: 'janKowalski',
+    name: 'Jan Kowalski',
+    password: 'Qwerty123',
+    email: 'janKowalski@gmail.com'
+  };
+
+  saveCounter: Counter;
+
+  constructor(private counterService: CounterService) {
+    this.cleanSaveCounter();
+  }
 
   ngOnInit() {
+  }
+
+  cleanSaveCounter() {
+    this.saveCounter = {
+      counterState: null,
+      counterLocalDate: '',
+      fuelTank: null,
+      user: this.user
+    }
+  }
+
+  save() {
+    this.saveCounter.counterLocalDate = Date.parse(this.saveCounter.counterLocalDate) + "";
+    this.counterService.saveCounter(this.saveCounter).subscribe(n => {
+      this.cleanSaveCounter();
+    });
   }
 
 }

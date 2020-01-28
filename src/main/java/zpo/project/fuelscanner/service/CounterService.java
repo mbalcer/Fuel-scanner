@@ -32,7 +32,7 @@ public class CounterService {
     }
 
     public Counter createCounter(CounterDTO counterDTO) {
-        counterDTO.setUser(userService.getUser(1L)); //
+        counterDTO.setUser(userService.getUserByLogin(counterDTO.getUser().getLogin()));
         Counter c = counterMapper.convertToEntity(counterDTO);
         return counterRepository.save(c);
     }
