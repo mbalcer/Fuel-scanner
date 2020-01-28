@@ -4,14 +4,14 @@
     <mat-expansion-panel class="history-panel" *ngFor="let receipt of dataSource">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Data: brak
+          Data: {{receipt.receiptLocalDate}}
         </mat-panel-title>
         <mat-panel-description>
           Cena za paliwo: {{receipt.cost}} zł
         </mat-panel-description>
       </mat-expansion-panel-header>
       <mat-list role="list">
-        <mat-list-item role="listitem">Data paragonu: brak</mat-list-item>
+        <mat-list-item role="listitem">Data paragonu: {{receipt.receiptLocalDate}}</mat-list-item>
         <mat-list-item role="listitem">Ilość zatankowanych litrów: {{receipt.litres}} l</mat-list-item>
         <mat-list-item role="listitem">Cena za litr: {{receipt.pricePerLitres}} zł</mat-list-item>
         <mat-list-item role="listitem">Cena za całość: {{receipt.cost}} zł</mat-list-item>
