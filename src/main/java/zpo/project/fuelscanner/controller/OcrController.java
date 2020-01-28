@@ -76,7 +76,7 @@ public class OcrController {
         File localFile = fileService.copyFile(inputStream);
         String content = ocrService.doOcr(localFile);
         opencv_core.IplImage s = receiptScanning.beforeOcr(localFile.getPath());
-        opencv_core.IplImage squareEdgeDetectionImage = receiptScanning.squareEdgeDetection(s,50);
+        opencv_core.IplImage squareEdgeDetectionImage = receiptScanning.squareEdgeDetection(s,100);
         receiptScanning.findLargestSquare(squareEdgeDetectionImage);
         receiptScanning.cleanImageSmoothingForOCR(s);
         //For testing: receipt is owned by User1
