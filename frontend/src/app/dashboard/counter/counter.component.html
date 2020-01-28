@@ -1,21 +1,21 @@
 <div class="container-counter">
   <h1>Licznik kilometrów</h1>
   <mat-form-field class="counter-state">
-    <input matInput placeholder="Wpisz stan licznika">
+    <input matInput placeholder="Wpisz stan licznika" [(ngModel)]="saveCounter.counterState">
   </mat-form-field>
 
   <mat-form-field class="counter-date">
-    <input matInput [matDatepicker]="picker" placeholder="Wybierz datę">
+    <input matInput [matDatepicker]="picker" placeholder="Wybierz datę" [(ngModel)]="saveCounter.counterLocalDate">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field class="fuel">
-    <input matInput placeholder="Wpisz ilość paliwa pozostałą w baku">
+    <input matInput placeholder="Wpisz ilość paliwa pozostałą w baku" [(ngModel)]="saveCounter.fuelTank">
   </mat-form-field>
 
   <div class="btn-counter">
-    <button mat-raised-button color="primary">Zapisz</button>
+    <button mat-raised-button color="primary" (click)="save()">Zapisz</button>
   </div>
 
   <h3>Historia stanu licznika</h3>
@@ -23,17 +23,17 @@
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-counter">
     <ng-container matColumnDef="counter">
       <th mat-header-cell *matHeaderCellDef> Licznik </th>
-      <td mat-cell *matCellDef="let element"> {{element.counter}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.counterState}} </td>
     </ng-container>
 
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef> Data </th>
-      <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.counterLocalDate}} </td>
     </ng-container>
 
     <ng-container matColumnDef="fuel">
       <th mat-header-cell *matHeaderCellDef> Paliwo </th>
-      <td mat-cell *matCellDef="let element"> {{element.fuel}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.fuelTank}} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

@@ -17,7 +17,7 @@ public class Counter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@JsonIgnore
+    @JsonIgnore
     private Long id;
 
     private Double counterState;

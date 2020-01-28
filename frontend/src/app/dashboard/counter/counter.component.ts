@@ -1,4 +1,8 @@
 import {Component, OnInit} from '@angular/core';
+import {Counter} from "../../model/counter";
+import {CounterService} from "../../service/counter.service";
+import {User} from "../../model/user";
+import {MatTableDataSource} from "@angular/material";
 
 @Component({
   selector: 'app-counter',
@@ -7,24 +11,49 @@ import {Component, OnInit} from '@angular/core';
 })
 export class CounterComponent implements OnInit {
   displayedColumns: string[] = ['counter', 'date', 'fuel'];
-  dataSource = EXAMPLE_DATA;
+  dataSource = new MatTableDataSource<Counter>();
+  counterList: Counter[];
 
-  constructor() { }
+    user: User = {
+    login: 'janKowalski',
+    name: 'Jan Kowalski',
+    password: 'Qwerty123',
+    email: 'janKowalski@gmail.com'
+  };
+
+  saveCounter: Counter;
+
+  constructor(private counterService: CounterService) {
+    this.cleanSaveCounter();
+    this.counterService.getAllCounterByUser(this.user.login).subscribe(n => {
+        this.counterList = n;
+        this.refreshTable();
+    });
+  }
 
   ngOnInit() {
   }
 
-}
+  cleanSaveCounter() {
+    this.saveCounter = {
+      counterState: null,
+      counterLocalDate: '',
+      fuelTank: null,
+      user: this.user
+    }
+  }
 
-export interface StateCounter {
-  counter: number,
-  fuel: number,
-  date: string
-}
+  refreshTable() {
+      this.dataSource = new MatTableDataSource<Counter>(this.counterList);
+  }
 
-const EXAMPLE_DATA: StateCounter[] = [
-  {counter: 100000, fuel: 5, date: "01/12/2019"},
-  {counter: 101032, fuel: 15.5, date: "11/12/2019"},
-  {counter: 102333, fuel: 30, date: "27/12/2019"},
-  {counter: 102875, fuel: 10.23, date: "03/01/2020"}
-];
+  save() {
+    this.saveCounter.counterLocalDate = Date.parse(this.saveCounter.counterLocalDate) + "";
+    this.counterService.saveCounter(this.saveCounter).subscribe(n => {
+        this.counterList.push(n);
+        this.cleanSaveCounter();
+        this.refreshTable();
+    });
+  }
+
+}
