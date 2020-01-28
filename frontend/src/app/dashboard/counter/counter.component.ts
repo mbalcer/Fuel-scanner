@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Counter} from "../../model/counter";
 import {CounterService} from "../../service/counter.service";
 import {User} from "../../model/user";
+import {MatTableDataSource} from "@angular/material";
 
 @Component({
   selector: 'app-counter',
@@ -10,9 +11,10 @@ import {User} from "../../model/user";
 })
 export class CounterComponent implements OnInit {
   displayedColumns: string[] = ['counter', 'date', 'fuel'];
-  dataSource = EXAMPLE_DATA;
+  dataSource = new MatTableDataSource<Counter>();
+  counterList: Counter[];
 
-  user: User = {
+    user: User = {
     login: 'janKowalski',
     name: 'Jan Kowalski',
     password: 'Qwerty123',
@@ -23,6 +25,10 @@ export class CounterComponent implements OnInit {
 
   constructor(private counterService: CounterService) {
     this.cleanSaveCounter();
+    this.counterService.getAllCounterByUser(this.user.login).subscribe(n => {
+        this.counterList = n;
+        this.refreshTable();
+    });
   }
 
   ngOnInit() {
@@ -37,24 +43,17 @@ export class CounterComponent implements OnInit {
     }
   }
 
+  refreshTable() {
+      this.dataSource = new MatTableDataSource<Counter>(this.counterList);
+  }
+
   save() {
     this.saveCounter.counterLocalDate = Date.parse(this.saveCounter.counterLocalDate) + "";
     this.counterService.saveCounter(this.saveCounter).subscribe(n => {
-      this.cleanSaveCounter();
+        this.counterList.push(n);
+        this.cleanSaveCounter();
+        this.refreshTable();
     });
   }
 
 }
-
-export interface StateCounter {
-  counter: number,
-  fuel: number,
-  date: string
-}
-
-const EXAMPLE_DATA: StateCounter[] = [
-  {counter: 100000, fuel: 5, date: "01/12/2019"},
-  {counter: 101032, fuel: 15.5, date: "11/12/2019"},
-  {counter: 102333, fuel: 30, date: "27/12/2019"},
-  {counter: 102875, fuel: 10.23, date: "03/01/2020"}
-];

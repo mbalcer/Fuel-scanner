@@ -23,17 +23,17 @@
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-counter">
     <ng-container matColumnDef="counter">
       <th mat-header-cell *matHeaderCellDef> Licznik </th>
-      <td mat-cell *matCellDef="let element"> {{element.counter}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.counterState}} </td>
     </ng-container>
 
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef> Data </th>
-      <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.counterLocalDate}} </td>
     </ng-container>
 
     <ng-container matColumnDef="fuel">
       <th mat-header-cell *matHeaderCellDef> Paliwo </th>
-      <td mat-cell *matCellDef="let element"> {{element.fuel}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.fuelTank}} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

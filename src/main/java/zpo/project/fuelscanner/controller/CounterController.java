@@ -34,9 +34,9 @@ public class CounterController {
         return counterService.getCounter(id);
     }
 
-    @GetMapping("/allByUser/{userId}")
-    public List<Counter> getCountersByUser(@PathVariable long userId) {
-        return counterService.findAllByUser(userService.getUser(userId));
+    @GetMapping("/allByUser/{login}")
+    public List<Counter> getCountersByUser(@PathVariable String login) {
+        return counterService.findAllByUser(userService.getUserByLogin(login));
     }
 
     @PostMapping
