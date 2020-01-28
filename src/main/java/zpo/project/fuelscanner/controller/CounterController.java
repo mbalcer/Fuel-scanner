@@ -2,6 +2,7 @@ package zpo.project.fuelscanner.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import zpo.project.fuelscanner.dto.CounterDTO;
 import zpo.project.fuelscanner.model.Counter;
 import zpo.project.fuelscanner.service.CounterService;
 import zpo.project.fuelscanner.service.UserService;
@@ -13,11 +14,14 @@ import java.util.List;
 @CrossOrigin
 public class CounterController {
 
-    @Autowired
-    CounterService counterService;
+    private CounterService counterService;
+    private UserService userService;
 
     @Autowired
-    UserService userService;
+    public CounterController(CounterService counterService, UserService userService) {
+        this.counterService = counterService;
+        this.userService = userService;
+    }
 
     @GetMapping("/all")
     public List<Counter> getCounters() {
@@ -35,8 +39,8 @@ public class CounterController {
         return counterService.findAllByUser(userService.getUser(userId));
     }
 
-    @PostMapping("/saveCounter")
-    public Counter saveCounter(@RequestBody Counter counter) {
+    @PostMapping
+    public Counter saveCounter(@RequestBody CounterDTO counter) {
         return counterService.createCounter(counter);
     }
 
