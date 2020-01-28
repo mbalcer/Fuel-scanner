@@ -1,11 +1,13 @@
 package zpo.project.fuelscanner.controller;
 
+import org.bytedeco.javacpp.opencv_core;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import zpo.project.fuelscanner.config.ReceiptScanning;
 import zpo.project.fuelscanner.model.Receipt;
 import zpo.project.fuelscanner.service.OcrService;
 import zpo.project.fuelscanner.service.FileService;
@@ -25,7 +27,8 @@ public class OcrController {
     private ReceiptService receiptService;
     private FileService fileService;
     private UserService userService;
-
+    @Autowired
+    public ReceiptScanning receiptScanning = new ReceiptScanning();
     @Autowired
     public OcrController(OcrService ocrService, ReceiptService receiptService,  FileService fileService, UserService userService) {
         this.ocrService = ocrService;
@@ -72,7 +75,10 @@ public class OcrController {
         InputStream inputStream = file.getInputStream();
         File localFile = fileService.copyFile(inputStream);
         String content = ocrService.doOcr(localFile);
-
+        opencv_core.IplImage s = receiptScanning.beforeOcr(localFile.getPath());
+        opencv_core.IplImage squareEdgeDetectionImage = receiptScanning.squareEdgeDetection(s,50);
+        receiptScanning.findLargestSquare(squareEdgeDetectionImage);
+        receiptScanning.cleanImageSmoothingForOCR(s);
         //For testing: receipt is owned by User1
         //Later change: receipt is owned by logged user
         Receipt receipt = receiptService.createReceipt(

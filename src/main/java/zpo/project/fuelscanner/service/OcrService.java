@@ -20,6 +20,7 @@ public class OcrService {
         this.ocrConfig = ocrConfig;
     }
 
+
     public String doOcr(String url) {
         try {
             URL imageFile = new URL(url);
