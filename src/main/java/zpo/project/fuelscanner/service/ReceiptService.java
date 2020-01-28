@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,6 +62,7 @@ public class ReceiptService {
                     receipt.setLitres(k.getKey());
                     receipt.setPricePerLitres(k.getValue());
                     receipt.setCost(cost);
+                    receipt.setReceiptLocalDate(getDate(receipt.getContent()));
                     //Merging -> save not here but in doOCR()
                     //fuelSumRepo.save(new FuelSum(0l, k.getKey(), k.getValue(), cost));
                 });
@@ -83,6 +85,17 @@ public class ReceiptService {
 
         }
         return countValues;
+    }
+    private static LocalDate getDate(String str){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        final Pattern date = Pattern.compile("\\d{2}-\\d{2}-\\d{4}",Pattern.CASE_INSENSITIVE);
+        LocalDate foundDate = null;
+        Matcher dateMatcher = date.matcher(str);
+        while(dateMatcher.find())
+        {
+            foundDate = LocalDate.parse(dateMatcher.group(),formatter);
+        }
+        return foundDate;
     }
 
 
