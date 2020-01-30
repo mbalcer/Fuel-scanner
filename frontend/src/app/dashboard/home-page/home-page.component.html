@@ -1,1 +1,19 @@
-<p>home-page works!</p>
+<div class="container-home">
+    <h1>Witaj w FUEL SCANNER!</h1>
+    <div class="description">
+        Aplikacja Fuel scanner pozwala na zarządzanie swoimi paragonami ze stacji paliw. Dzięki naszej aplikacji dowiesz
+        się między innymi ile wydajesz na paliwo w ciągu miesiąca czy średnie spalanie paliwa. Więcej dowiesz się w sekcji
+        <a [routerLink]="[{ outlets: { panel: ['info'] }}]">informacje</a>
+    </div>
+
+    <div class="tiles">
+        <div class="tile-row">
+            <div class="tile" [routerLink]="[{ outlets: { panel: ['scanner'] }}]">Skanowanie paragonu</div>
+            <div class="tile" [routerLink]="[{ outlets: { panel: ['history'] }}]">Historia</div>
+        </div>
+        <div class="tile-row">
+            <div class="tile" [routerLink]="[{ outlets: { panel: ['counter'] }}]">Licznik kilometrów</div>
+            <div class="tile" [routerLink]="[{ outlets: { panel: ['stats'] }}]">Statystyki</div>
+        </div>
+    </div>
+</div>
