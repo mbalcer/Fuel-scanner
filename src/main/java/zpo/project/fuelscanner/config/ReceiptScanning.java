@@ -32,6 +32,8 @@ public class ReceiptScanning {
                 srcImage.depth(),
                 srcImage.nChannels());
         cvResize(srcImage,destImage);
+        File f = new File(System.getProperty("user.home")+File.separator+"afterDownScale.jpeg");
+        cvSaveImage(f.getAbsolutePath(),destImage);
         return destImage;
     }
     public opencv_core.IplImage squareEdgeDetection(opencv_core.IplImage srcImage, int percent){
@@ -86,13 +88,67 @@ public class ReceiptScanning {
         cvSaveImage(f.getAbsolutePath(),foundedContoursImage);
         return result;
     }
+
+    public IplImage applyPerspectiveTransformThresholdOnOriginalImage(IplImage srcImage, CvSeq contour, int percent) {
+        IplImage warpImage = cvCloneImage(srcImage);
+
+        for (int i = 0; i < contour.total(); i++) {
+            CvPoint point = new CvPoint(cvGetSeqElem(contour, i));
+            point.x((int) (point.x() * 100) / percent);
+            point.y((int) (point.y() * 100) / percent);
+        }
+
+        CvPoint topRightPoint = new CvPoint(cvGetSeqElem(contour, 0));
+        CvPoint topLeftPoint = new CvPoint(cvGetSeqElem(contour, 1));
+        CvPoint bottomLeftPoint = new CvPoint(cvGetSeqElem(contour, 2));
+        CvPoint bottomRightPoint = new CvPoint(cvGetSeqElem(contour, 3));
+
+        int resultWidth = (int) (topRightPoint.x() - topLeftPoint.x());
+        int bottomWidth = (int) (bottomRightPoint.x() - bottomLeftPoint.x());
+        if (bottomWidth > resultWidth)
+            resultWidth = bottomWidth;
+
+        int resultHeight = (int) (bottomLeftPoint.y() - topLeftPoint.y());
+        int bottomHeight = (int) (bottomRightPoint.y() - topRightPoint.y());
+        if (bottomHeight > resultHeight)
+            resultHeight = bottomHeight;
+
+        float[] sourcePoints = {topLeftPoint.x(), topLeftPoint.y(),
+                topRightPoint.x(), topRightPoint.y(), bottomLeftPoint.x(),
+                bottomLeftPoint.y(), bottomRightPoint.x(), bottomRightPoint.y()
+        };
+
+        float[] destinationPoints = {0, 0, resultWidth, 0, 0, resultHeight,
+                resultWidth, resultHeight};
+
+        CvMat homography = cvCreateMat(3, 3, CV_32FC1);
+        cvGetPerspectiveTransform(sourcePoints, destinationPoints, homography);
+        System.out.println(homography.toString());
+        IplImage destImage = cvCloneImage(warpImage);
+        cvWarpPerspective(warpImage, destImage, homography, CV_INTER_LINEAR,
+                CvScalar.ZERO);
+
+        return cropImage(destImage, 0, 0, resultWidth, resultHeight);
+    }
+
+    public IplImage cropImage(IplImage srcImage, int fromX, int fromY,
+                              int toWidth, int toHeight) {
+        cvSetImageROI(srcImage, cvRect(fromX, fromY, toWidth, toHeight));
+        IplImage destImage = cvCloneImage(srcImage);
+        cvCopy(srcImage, destImage);
+        return destImage;
+    }
+
     public IplImage cleanImageSmoothingForOCR(IplImage srcImage)
     {
         IplImage destImage = cvCreateImage(cvGetSize(srcImage),IPL_DEPTH_8U,1);
         cvCvtColor(srcImage,destImage,CV_BGR2GRAY);
-        cvSmooth(destImage,destImage,CV_MEDIAN,3,0,0,0);
-        cvThreshold(destImage,destImage,0,255,CV_THRESH_OTSU);
-        File f = new File(System.getProperty("user.home")+File.separator+"beforeOCR.jpeg");
+        //cvSmooth(destImage,destImage,CV_MEDIAN,3,0,0,0);
+        //cvSmooth(destImage, destImage, CV_GAUSSIAN, 3, 1, 1, 0);
+        cvThreshold(destImage,destImage,0,255,CV_THRESH_OTSU + CV_THRESH_BINARY);
+        cvSmooth(destImage,destImage,CV_MEDIAN,1,0,0,0);
+       // cvAdaptiveThreshold(destImage, 255,CV_ADAPTIVE_THRESH_GAUSSIAN_C, CV_THRESH_BINARY, 31);
+        File f = new File(System.getProperty("user.home")+File.separator+"afterSmoothing.jpeg");
         cvSaveImage(f.getAbsolutePath(),destImage);
         return destImage;
     }

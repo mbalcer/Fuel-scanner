@@ -75,10 +75,12 @@ public class OcrController {
         InputStream inputStream = file.getInputStream();
         File localFile = fileService.copyFile(inputStream);
         String content = ocrService.doOcr(localFile);
-        opencv_core.IplImage s = receiptScanning.beforeOcr(localFile.getPath());
-        opencv_core.IplImage squareEdgeDetectionImage = receiptScanning.squareEdgeDetection(s,100);
-        receiptScanning.findLargestSquare(squareEdgeDetectionImage);
-        receiptScanning.cleanImageSmoothingForOCR(s);
+        opencv_core.IplImage resizeIMG = receiptScanning.beforeOcr(localFile.getPath());
+        //opencv_core.IplImage squareEdgeDetectionImage = receiptScanning.squareEdgeDetection(resizeIMG,30);
+       // opencv_core.CvSeq findedSquareIMG = receiptScanning.findLargestSquare(squareEdgeDetectionImage);
+        //opencv_core.IplImage afterTransformIMG = receiptScanning.applyPerspectiveTransformThresholdOnOriginalImage(resizeIMG,findedSquareIMG,30);
+        opencv_core.IplImage downScaleIMG = receiptScanning.downScaleImage(resizeIMG,100);
+        receiptScanning.cleanImageSmoothingForOCR(downScaleIMG);
         //For testing: receipt is owned by User1
         //Later change: receipt is owned by logged user
         Receipt receipt = receiptService.createReceipt(

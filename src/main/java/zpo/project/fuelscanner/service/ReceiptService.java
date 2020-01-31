@@ -1,5 +1,6 @@
 package zpo.project.fuelscanner.service;
 
+
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,7 @@ public class ReceiptService {
         //System.out.println(Arrays.toString(getCount(line).toArray()));
         getCount(receipt.getContent()).entries()
                 .stream()
-                .forEach(k-> {
+                .forEach(k -> {
                     Double cost = BigDecimal.valueOf(k.getKey() * k.getValue())
                             .setScale(2, RoundingMode.FLOOR)
                             .doubleValue();
@@ -68,32 +69,39 @@ public class ReceiptService {
                 });
         return receipt;
     }
-    private static MultiValuedMap<Double,Double> getCount(final String str) {
-        final Pattern finalPrice = Pattern.compile("\\s*PLN.?([\\d+]{1,5}\\.?[\\d]{0,5})",Pattern.DOTALL);
+
+    private static MultiValuedMap<Double, Double> getCount(final String str) {
+        final Pattern finalPrice = Pattern.compile("\\s*PLN.?([\\d+]{1,5}\\.?[\\d]{0,5})", Pattern.DOTALL);
 
         //final Pattern litres = Pattern.compile("\\b\\S?LEJ \\S?AP\\S?DOW\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bVERVA 95\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bDIESEL\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bVERVA 98\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bBENZYNA\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bGAZ LPG\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})"); // w tym przypadku dodamy wiecej nazw
-        final Pattern litres = Pattern.compile("([\\d+]{1,5}\\.?[\\d]{0,5})\\s?[L]?\\s?[x+*]+",Pattern.CASE_INSENSITIVE);
-        final Pattern pricePerLitres = Pattern.compile("[x+*]+\\s*([\\d+]{1,5}\\.?[\\d]{0,5})",Pattern.CASE_INSENSITIVE);
-        final MultiValuedMap<Double,Double> countValues = new ArrayListValuedHashMap<>();
+        final Pattern litres = Pattern.compile("([\\d+]{1,5}\\s?\\.?,?\\s?[\\d]{0,5})\\s?[L]?\\s?[x+*e]+", Pattern.CASE_INSENSITIVE);
+        final Pattern pricePerLitres = Pattern.compile("\\d+\\s?[x+*e]+\\s*([\\d+]{1,5}\\s?\\.?,?\\s?[\\d]{0,5})", Pattern.CASE_INSENSITIVE);
+        final MultiValuedMap<Double, Double> countValues = new ArrayListValuedHashMap<>();
         final Matcher matcher = finalPrice.matcher(str); //price
         final Matcher matcher2 = litres.matcher(str); //litres
         final Matcher matcher3 = pricePerLitres.matcher(str); //pricePerLitres
         while (matcher2.find() && matcher3.find()) {
             System.out.println(matcher3.group());
             // countValues.put(Double.parseDouble(matcher2.group().replaceAll("\\b\\S?LEJ \\S?AP\\S?DOW\\D*\\(?\\d?\\)?\\s*\\D*\\b|\\bBENZYNA\\D*\\(?\\d?\\)?\\s*\\D*\\b|\\bVERVA 98\\D*\\(?\\d?\\)?\\s*\\D*\\b|\\bDIESEL\\D*\\(?\\d?\\)?\\s*\\D*\\b|\\bGAZ LPG\\D*\\(?\\d?\\)?\\s*\\D*\\b\\b|\\bVERVA 95\\D*\\(?\\d?\\)?\\s*\\D*\\b","")),Double.parseDouble(matcher3.group(1)));// w tym przypadku dodamy wiecej nazw
-            countValues.put(Double.parseDouble(matcher2.group().replaceAll("\\s?[L]?\\s?[x+*]+","")),Double.parseDouble(matcher3.group(1)));
+            countValues.put(Double.parseDouble(matcher2.group().replaceAll("\\s?[L]?\\s?[x+*e]+", "").replace(",", ".")), Double.parseDouble(matcher3.group(1).replace(",", ".")));
 
         }
         return countValues;
     }
-    private static LocalDate getDate(String str){
+
+    private static LocalDate getDate(String str) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        final Pattern date = Pattern.compile("\\d{2}-\\d{2}-\\d{4}",Pattern.CASE_INSENSITIVE);
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        final Pattern date = Pattern.compile("\\d{2}-\\d{2}-\\d{4}", Pattern.CASE_INSENSITIVE);
+        final Pattern date2 = Pattern.compile("\\d{4}-\\d{2}-\\d{2}", Pattern.CASE_INSENSITIVE);
         LocalDate foundDate = null;
         Matcher dateMatcher = date.matcher(str);
-        while(dateMatcher.find())
-        {
-            foundDate = LocalDate.parse(dateMatcher.group(),formatter);
+        Matcher dateMatcher2 = date2.matcher(str);
+        while (dateMatcher.find()) {
+            foundDate = LocalDate.parse(dateMatcher.group(), formatter);
+        }
+        while (dateMatcher2.find()) {
+            foundDate = LocalDate.parse(dateMatcher2.group(), formatter2);
         }
         return foundDate;
     }
