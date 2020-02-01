@@ -57,6 +57,10 @@ export class ScannerComponent implements OnInit {
     }
   }
 
+  saveReceipt() {
+    console.log(this.receipt);
+  }
+
   onFileSelected(files : FileList) {
     this.fileToUpload = files.item(0);
   }
