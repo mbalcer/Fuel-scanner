@@ -10,17 +10,20 @@ import {ReceiptStats} from "../../model/receipt-stats";
 export class StatsComponent implements OnInit {
 
   user = "aniaNowicka"; //TODO change user
-  receiptStats: ReceiptStats[];
+  receiptStats: ReceiptStats[] = [];
   statsType: StatsType[] = [
       {value: "tank", viewValue: "Suma tankowania"},
       {value: "fuel", viewValue: "Koszty paliwa"}
   ];
-  selectedStatsType: string;
+  selectedStatsType: StatsType = {
+      value: '',
+      viewValue: ''
+  };
 
   title = 'Wykres';
   type = 'LineChart';
   dataChart = [];
-  columnNames = ['Data', 'Koszt paliwa', "Zatankowane paliwo"];
+  columnNames = [];
 
   constructor(private statsService: StatsService) {
     this.getAllStatsByUser();
@@ -32,18 +35,28 @@ export class StatsComponent implements OnInit {
   private getAllStatsByUser() {
     this.statsService.getAllStats(this.user).subscribe(n => {
       this.receiptStats = n;
-      this.prepareData(n);
     });
   }
 
   private prepareData(data) {
+    this.dataChart = [];
     data.forEach(i => {
-      this.dataChart.push([i.yearMonth, i.cost, i.litres]);
+        if (this.selectedStatsType.value == 'tank') {
+            this.dataChart.push([i.yearMonth, i.cost, i.litres]);
+        } else if (this.selectedStatsType.value == 'fuel') {
+            this.dataChart.push([i.yearMonth, i.minCostPerLitre, i.averageCostPerLitre, i.maxCostPerLitre])
+        }
     });
   }
 
-  changeStats(event) {
-    this.selectedStatsType = event;
+  changeStats(statsType) {
+    this.selectedStatsType = statsType;
+    if (this.selectedStatsType.value == 'tank') {
+        this.columnNames = ['Data', 'Koszt paliwa', "Zatankowane paliwo"];
+    } else if (this.selectedStatsType.value == 'fuel') {
+        this.columnNames = ['Data', 'Minimalna cena paliwa', "Srednia cena paliwa", "Maksymalna cena paliwa"];
+    }
+      this.prepareData(this.receiptStats);
   }
 }
 
