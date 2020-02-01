@@ -15,7 +15,10 @@ export class StatsComponent implements OnInit {
   counterStats: CounterStats[] = [];
   statsType: StatsType[] = [
       {value: "tank", viewValue: "Suma tankowania"},
-      {value: "fuel", viewValue: "Koszty paliwa"}
+      {value: "fuel", viewValue: "Koszty paliwa"},
+      {value: "km", viewValue: "Przejechany dystans"},
+      {value: "usage", viewValue: "Zużycie paliwa"}
+
   ];
   selectedStatsType: StatsType = {
       value: '',
@@ -40,28 +43,34 @@ export class StatsComponent implements OnInit {
     });
     this.statsService.getAllCounterStats(this.user).subscribe(n => {
       this.counterStats = n;
+      console.log(n);
     });
   }
 
-  private prepareData(data) {
+  private prepareData(receiptData, counterData) {
     this.dataChart = [];
-    data.forEach(i => {
-        if (this.selectedStatsType.value == 'tank') {
+    receiptData.forEach(i => {
+        if (this.selectedStatsType.value == 'tank')
             this.dataChart.push([i.yearMonth, i.cost, i.litres]);
-        } else if (this.selectedStatsType.value == 'fuel') {
+        else if (this.selectedStatsType.value == 'fuel')
             this.dataChart.push([i.yearMonth, i.minCostPerLitre, i.averageCostPerLitre, i.maxCostPerLitre])
-        }
+    });
+    counterData.forEach(i => {
+        if (this.selectedStatsType.value == 'km')
+            this.dataChart.push([i.startLocalDate + " - " + i.endLocalDate, i.distanceTravelled]);
     });
   }
 
   changeStats(statsType) {
     this.selectedStatsType = statsType;
-    if (this.selectedStatsType.value == 'tank') {
+    if (this.selectedStatsType.value == 'tank')
         this.columnNames = ['Data', 'Koszt paliwa', "Zatankowane paliwo"];
-    } else if (this.selectedStatsType.value == 'fuel') {
+    else if (this.selectedStatsType.value == 'fuel')
         this.columnNames = ['Data', 'Minimalna cena paliwa', "Srednia cena paliwa", "Maksymalna cena paliwa"];
-    }
-      this.prepareData(this.receiptStats);
+    else if (this.selectedStatsType.value == 'km')
+        this.columnNames = ['Data', "Przejechane kilometry"];
+
+    this.prepareData(this.receiptStats, this.counterStats);
   }
 }
 
