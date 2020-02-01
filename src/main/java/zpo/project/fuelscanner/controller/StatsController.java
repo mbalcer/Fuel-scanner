@@ -2,6 +2,7 @@ package zpo.project.fuelscanner.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import zpo.project.fuelscanner.model.CounterStats;
 import zpo.project.fuelscanner.model.ReceiptStats;
 import zpo.project.fuelscanner.service.StatsService;
 import zpo.project.fuelscanner.service.UserService;
@@ -35,6 +36,11 @@ public class StatsController {
     @GetMapping("/allReceiptCost/{login}")
     public double getAllReceiptCostByUserLogin(@PathVariable String login) {
         return statsService.getAllReceiptCostByUser(userService.getUserByLogin(login));
+    }
+
+    @GetMapping("/counterStats/{login}")
+    public List<CounterStats> getCounterStatsByUserLogin(@PathVariable String login) {
+        return statsService.getCounterStatsByUser(userService.getUserByLogin(login));
     }
 
 }

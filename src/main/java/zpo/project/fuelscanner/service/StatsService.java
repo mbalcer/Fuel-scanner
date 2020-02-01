@@ -2,13 +2,14 @@ package zpo.project.fuelscanner.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import zpo.project.fuelscanner.model.Receipt;
-import zpo.project.fuelscanner.model.ReceiptStats;
-import zpo.project.fuelscanner.model.User;
+import zpo.project.fuelscanner.model.*;
+import zpo.project.fuelscanner.repository.CounterRepository;
 import zpo.project.fuelscanner.repository.ReceiptRepository;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,10 +17,12 @@ import java.util.stream.Collectors;
 public class StatsService {
 
     private ReceiptRepository receiptRepository;
+    private CounterRepository counterRepository;
 
     @Autowired
-    public StatsService(ReceiptRepository receiptRepository) {
+    public StatsService(ReceiptRepository receiptRepository, CounterRepository counterRepository) {
         this.receiptRepository = receiptRepository;
+        this.counterRepository = counterRepository;
     }
 
     public double getAllReceiptLitresByUser(User user) {
@@ -67,4 +70,36 @@ public class StatsService {
     public List<Receipt> getAllReceiptByUserAndReceiptLocalDateBetween(User user, LocalDate start, LocalDate end) {
         return receiptRepository.findAllByUserAndReceiptLocalDateBetween(user, start, end);
     }
+
+
+    public List<CounterStats> getCounterStatsByUser(User user) {
+        ArrayList<CounterStats> counterStats = new ArrayList<>();
+
+        counterRepository.findAllByUser(user)
+                .stream()
+                .sorted(Comparator.comparing(Counter::getCounterLocalDate))
+                .reduce((counter, counter2) -> {
+                    CounterStats cs = new CounterStats(counter.getCounterLocalDate(),
+                            counter2.getCounterLocalDate(),
+                            counter2.getCounterState() - counter.getCounterState(),
+                            counter.getFuelTank() - counter2.getFuelTank()
+                                    + receiptRepository.findAllByUserAndReceiptLocalDateBetween(
+                                    user, counter.getCounterLocalDate(), counter2.getCounterLocalDate())
+                                    .stream().mapToDouble(Receipt::getLitres).sum(),
+                            1, 1);
+
+                    //TODO What if user forgot to add receipt(he has now more fuel in tank than earlier) -> Fuel consumed will be negative
+                    //Example: InitService -> counter 11
+                    if (cs.getFuelConsumed() < 0 || cs.getDistanceTravelled() < 0) {
+
+                    }
+
+                    counterStats.add(cs);
+
+                    return counter2;
+                });
+
+        return counterStats;
+    }
+
 }

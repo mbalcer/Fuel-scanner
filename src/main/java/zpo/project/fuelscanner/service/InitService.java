@@ -44,21 +44,36 @@ public class InitService {
         Receipt receipt4 = new Receipt(0L, "", "", LocalDate.now().minusDays(45), 15.45, 68.95 / 15.45, 68.95, u2);
         Receipt receipt5 = new Receipt(0L, "", "", LocalDate.now().minusDays(35), 22.34, 120.12 / 22.34, 120.12, u2);
         Receipt receipt6 = new Receipt(0L, "", "", LocalDate.now().minusDays(9), 6.97, 34.07 / 6.97, 34.07, u2);
-        Receipt receipt7 = new Receipt(0L, "", "", LocalDate.now().minusDays(46), 18.23, 88.3954 / 18.23, 88.39, u3);
-        Receipt receipt8 = new Receipt(0L, "", "", LocalDate.now().minusDays(23), 15.13, 65.85 / 15.13, 65.85, u3);
-        Receipt receipt9 = new Receipt(0L, "", "", LocalDate.now().minusDays(11), 25.92, 127.39 / 25.92, 127.3954, u3);
 
-        receiptRepository.saveAll(Arrays.asList(receipt1, receipt2, receipt3,
-                receipt4, receipt5, receipt6, receipt7, receipt8, receipt9));
+        Receipt receipt7 = new Receipt(0L, "", "", LocalDate.now().minusDays(46), 32.23, 161.87 / 32.23, 161.87, u3);
+        Receipt receipt8 = new Receipt(0L, "", "", LocalDate.now().minusDays(29), 21.13, 105.76 / 21.13, 105.76, u3);
+        Receipt receipt9 = new Receipt(0L, "", "", LocalDate.now().minusDays(16), 25.92, 127.39 / 25.92, 127.34, u3);
+        Receipt receipt10 = new Receipt(0L, "", "", LocalDate.now().minusDays(12), 54.34, 277.34 / 54.34, 277.34, u3);
+        Receipt receipt11 = new Receipt(0L, "", "", LocalDate.now().minusDays(8), 26.43, 122.87 / 26.43, 122.87, u3);
+
+        receiptRepository.saveAll(Arrays.asList(receipt1, receipt2, receipt3, receipt4,
+                receipt5, receipt6, receipt7, receipt8, receipt9, receipt10, receipt11));
 
         Counter c1 = new Counter(0L, 135567.00, LocalDate.now().minusDays(36), 14.00, u1);
         Counter c2 = new Counter(0L, 135678.00, LocalDate.now().minusDays(8), 7.00, u1);
         Counter c3 = new Counter(0L, 235753.00, LocalDate.now().minusDays(48), 11.00, u2);
         Counter c4 = new Counter(0L, 237765.00, LocalDate.now().minusDays(15), 9.00, u2);
-        Counter c5 = new Counter(0L, 58554.00, LocalDate.now().minusDays(40), 4.00, u3);
-        Counter c6 = new Counter(0L, 59326.00, LocalDate.now().minusDays(7), 6.00, u3);
 
-        counterRepository.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6));
+        Counter c5 = new Counter(0L, 58442.00, LocalDate.now().minusDays(73), 65.08, u3);
+        Counter c6 = new Counter(0L, 58554.00, LocalDate.now().minusDays(60), 56.23, u3);
+        Counter c7 = new Counter(0L, 59326.00, LocalDate.now().minusDays(38), 16.54, u3);
+        Counter c8 = new Counter(0L, 59438.00, LocalDate.now().minusDays(19), 27.12, u3);
+        Counter c9 = new Counter(0L, 59942.00, LocalDate.now().minusDays(14), 15.32, u3);
+        Counter c10 = new Counter(0L, 61027.00, LocalDate.now().minusDays(5), 7.872, u3);
+
+        //TODO What if user forgot to add receipt(he has now more fuel in tank than earlier) -> Fuel consumed will be negative
+        //Example: InitService -> counter 11
+        //Counter c11 = new Counter(0L, 61147.00, LocalDate.now().minusDays(2), 15.872, u3);
+
+        Counter c12 = new Counter(0L, 61043.00, LocalDate.now().minusDays(2), 6.12, u3);
+        Counter c13 = new Counter(0L, 61082.00, LocalDate.now().minusDays(2), 3.12, u3);
+
+        counterRepository.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c12, c13));
 
     }
 }

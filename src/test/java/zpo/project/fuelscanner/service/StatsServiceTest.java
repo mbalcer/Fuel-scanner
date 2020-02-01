@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class ReceiptServiceTest {
+class StatsServiceTest {
 
     @Autowired
     UserRepository userRepository;

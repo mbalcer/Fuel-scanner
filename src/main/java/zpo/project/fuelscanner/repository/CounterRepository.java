@@ -11,4 +11,5 @@ import java.util.List;
 public interface CounterRepository extends JpaRepository<Counter, Long> {
 
     List<Counter> findAllByUser(User user);
+
 }
