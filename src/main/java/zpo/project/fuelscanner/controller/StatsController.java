@@ -7,7 +7,9 @@ import zpo.project.fuelscanner.model.ReceiptStats;
 import zpo.project.fuelscanner.service.StatsService;
 import zpo.project.fuelscanner.service.UserService;
 
+import java.text.DecimalFormat;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/stats")
@@ -16,31 +18,41 @@ public class StatsController {
 
     private StatsService statsService;
     private UserService userService;
+    DecimalFormat df;
 
     @Autowired
     public StatsController(StatsService statsService, UserService userService) {
         this.statsService = statsService;
         this.userService = userService;
+
+        //Round to 2 decimal places
+        df = new DecimalFormat("#.##");
     }
 
     @GetMapping("/receiptStats/{login}")
     public List<ReceiptStats> getReceiptStatsByUserLogin(@PathVariable String login) {
-        return statsService.getReceiptStatsyByUserGroupedByYearMonth(userService.getUserByLogin(login));
+        return statsService.getReceiptStatsyByUserGroupedByYearMonth(userService.getUserByLogin(login))
+                .stream()
+                .map(ReceiptStats::roundTo2DecimalPlaces)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/allReceiptLitres/{login}")
     public double getAllReceiptLitresByUserLogin(@PathVariable String login) {
-        return statsService.getAllReceiptLitresByUser(userService.getUserByLogin(login));
+        return Double.valueOf(df.format(statsService.getAllReceiptLitresByUser(userService.getUserByLogin(login))));
     }
 
     @GetMapping("/allReceiptCost/{login}")
     public double getAllReceiptCostByUserLogin(@PathVariable String login) {
-        return statsService.getAllReceiptCostByUser(userService.getUserByLogin(login));
+        return Double.valueOf(df.format(statsService.getAllReceiptCostByUser(userService.getUserByLogin(login))));
     }
 
     @GetMapping("/counterStats/{login}")
     public List<CounterStats> getCounterStatsByUserLogin(@PathVariable String login) {
-        return statsService.getCounterStatsByUser(userService.getUserByLogin(login));
+        return statsService.getCounterStatsByUser(userService.getUserByLogin(login))
+                .stream()
+                .map(CounterStats::roundTo2DecimalPlaces)
+                .collect(Collectors.toList());
     }
 
 }
