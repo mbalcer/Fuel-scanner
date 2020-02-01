@@ -16,7 +16,8 @@ import {CounterComponent} from './dashboard/counter/counter.component';
 import {StatsComponent} from './dashboard/stats/stats.component';
 import {InformationComponent} from './dashboard/information/information.component';
 import {HomePageComponent} from './dashboard/home-page/home-page.component';
-import { RegistrationComponent } from './registration/registration.component';
+import {RegistrationComponent} from './registration/registration.component';
+import {GoogleChartsModule} from "angular-google-charts";
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { RegistrationComponent } from './registration/registration.component';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    GoogleChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
