@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {StatsService} from "../../service/stats.service";
 import {ReceiptStats} from "../../model/receipt-stats";
+import {CounterStats} from "../../model/counter-stats";
 
 @Component({
   selector: 'app-stats',
@@ -11,6 +12,7 @@ export class StatsComponent implements OnInit {
 
   user = "aniaNowicka"; //TODO change user
   receiptStats: ReceiptStats[] = [];
+  counterStats: CounterStats[] = [];
   statsType: StatsType[] = [
       {value: "tank", viewValue: "Suma tankowania"},
       {value: "fuel", viewValue: "Koszty paliwa"}
@@ -33,8 +35,11 @@ export class StatsComponent implements OnInit {
   }
 
   private getAllStatsByUser() {
-    this.statsService.getAllStats(this.user).subscribe(n => {
+    this.statsService.getAllReceiptStats(this.user).subscribe(n => {
       this.receiptStats = n;
+    });
+    this.statsService.getAllCounterStats(this.user).subscribe(n => {
+      this.counterStats = n;
     });
   }
 
