@@ -15,7 +15,7 @@ import static org.bytedeco.javacpp.opencv_imgproc.*;
 
 @Component
 public class ReceiptScanning {
-    public opencv_core.IplImage beforeOcr(String path){
+    public opencv_core.IplImage beforeSmooth(String path){
         System.out.println("jestem tutaj beforeOcr");
         final File receiptImageFile = new File(path);
         final String receiptImagePathFile = receiptImageFile.getAbsolutePath();

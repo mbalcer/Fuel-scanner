@@ -11,6 +11,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
 
+import static org.bytedeco.javacpp.opencv_imgcodecs.cvSaveImage;
+
 @Service
 public class OcrService {
     private OcrConfig ocrConfig;
