@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import zpo.project.fuelscanner.model.FuellingDateSummary;
 import zpo.project.fuelscanner.model.Receipt;
+import zpo.project.fuelscanner.model.ReceiptStats;
 import zpo.project.fuelscanner.model.User;
 import zpo.project.fuelscanner.repository.ReceiptRepository;
 import zpo.project.fuelscanner.repository.UserRepository;
@@ -35,10 +35,13 @@ class ReceiptServiceTest {
     @Autowired
     ReceiptService receiptService;
 
+    @Autowired
+    StatsService statsService;
+
     @Test
     void getAllReceiptLitresByUser() {
         User u1 = userRepository.findById(1L).get();
-        double givenResult = receiptService.getAllReceiptLitresByUser(u1);
+        double givenResult = statsService.getAllReceiptLitresByUser(u1);
         double expectedResult = 39.12;
         assertEquals(expectedResult, givenResult, 0.001);
     }
@@ -46,7 +49,7 @@ class ReceiptServiceTest {
     @Test
     void getAllReceiptLitresByUser2() {
         User u2 = userRepository.findById(2L).get();
-        double givenResult = receiptService.getAllReceiptLitresByUser(u2);
+        double givenResult = statsService.getAllReceiptLitresByUser(u2);
         double expectedResult = 44.76;
         assertEquals(expectedResult, givenResult, 0.001);
     }
@@ -54,23 +57,23 @@ class ReceiptServiceTest {
     @Test
     void getAllReceiptCostByUser() {
         User u1 = userRepository.findById(1L).get();
-        double givenResult = receiptService.getAllReceiptCostByUser(u1);
+        double givenResult = statsService.getAllReceiptCostByUser(u1);
         double expectedResult = 196.57;
         assertEquals(expectedResult, givenResult, 0.001);
     }
 
     @Test
-    void getFuellingDateSummaryByUserGroupedByYearMonth() {
+    void getReceiptStatsByUserGroupedByYearMonth() {
         User u1 = userRepository.findById(1L).get();
-        List<FuellingDateSummary> givenResult = receiptService.getFuellingDateSummaryByUserGroupedByYearMonth(u1);
+        List<ReceiptStats> givenResult = statsService.getReceiptStatsyByUserGroupedByYearMonth(u1);
         givenResult.get(0).setCost(round(givenResult.get(0).getCost(), 2));
         givenResult.get(0).setLitres(round(givenResult.get(0).getLitres(), 2));
         givenResult.get(0).setAverageCostPerLitre(round(givenResult.get(0).getAverageCostPerLitre(), 2));
         givenResult.get(0).setMaxCostPerLitre(round(givenResult.get(0).getMaxCostPerLitre(), 2));
         givenResult.get(0).setMinCostPerLitre(round(givenResult.get(0).getMinCostPerLitre(), 2));
 
-        List<FuellingDateSummary> expectedResult = new ArrayList<>();
-        expectedResult.add(new FuellingDateSummary(YearMonth.of(2019, 12), 39.12, 196.57,
+        List<ReceiptStats> expectedResult = new ArrayList<>();
+        expectedResult.add(new ReceiptStats(YearMonth.of(2020, 1), 39.12, 196.57,
                 round(196.57 / 39.12, 2), round(42.46 / 8.95, 2), round(51.54 / 10.05, 2)));
         assertEquals(expectedResult, givenResult);
     }

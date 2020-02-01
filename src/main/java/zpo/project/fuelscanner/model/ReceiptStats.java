@@ -10,7 +10,8 @@ import java.time.YearMonth;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FuellingDateSummary {
+public class ReceiptStats {
+
     YearMonth yearMonth;
     double litres;
     double cost;
@@ -18,7 +19,7 @@ public class FuellingDateSummary {
     double minCostPerLitre;
     double maxCostPerLitre;
 
-    public FuellingDateSummary(YearMonth yearMonth, double litres, double cost, double minCostPerLitre, double maxCostPerLitre) {
+    public ReceiptStats(YearMonth yearMonth, double litres, double cost, double minCostPerLitre, double maxCostPerLitre) {
         this.yearMonth = yearMonth;
         this.litres = litres;
         this.cost = cost;

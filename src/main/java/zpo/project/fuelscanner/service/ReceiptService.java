@@ -7,20 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import zpo.project.fuelscanner.model.FuellingDateSummary;
 import zpo.project.fuelscanner.model.Receipt;
-import zpo.project.fuelscanner.model.User;
 import zpo.project.fuelscanner.repository.ReceiptRepository;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 @Service
 public class ReceiptService {
@@ -104,54 +100,6 @@ public class ReceiptService {
             foundDate = LocalDate.parse(dateMatcher2.group(), formatter2);
         }
         return foundDate;
-    }
-
-
-    //From FuellingService
-    public double getAllReceiptLitresByUser(User user) {
-        return receiptRepository.findAllByUser(user)
-                .stream()
-                .mapToDouble(receipt ->
-                        receipt.getLitres())
-                .sum();
-    }
-
-    public double getAllReceiptCostByUser(User user) {
-        return receiptRepository.findAllByUser(user)
-                .stream()
-                .mapToDouble(receipt ->
-                        receipt.getCost())
-                .sum();
-    }
-
-    public List<FuellingDateSummary> getFuellingDateSummaryByUserGroupedByYearMonth(User user) {
-        return receiptRepository.findAllByUser(user)
-                .stream()
-                .collect(Collectors.groupingBy(receipt -> YearMonth.of(receipt.getReceiptLocalDate().getYear(), receipt.getReceiptLocalDate().getMonth())))
-                .entrySet()
-                .stream()
-                .map(o -> new FuellingDateSummary(o.getKey(),
-                        o.getValue()
-                                .stream()
-                                .mapToDouble(value -> value.getLitres())
-                                .sum(),
-                        o.getValue()
-                                .stream()
-                                .mapToDouble(value -> value.getCost())
-                                .sum(),
-                        o.getValue()
-                                .stream()
-                                .mapToDouble(value -> (value.getCost() / value.getLitres()))
-                                .min().orElse(0),
-                        o.getValue()
-                                .stream()
-                                .mapToDouble(value -> (value.getCost() / value.getLitres()))
-                                .max().orElse(0)))
-                .collect(Collectors.toList());
-    }
-
-    public List<Receipt> getAllReceiptByUserAndFuellingLocalDateBetween(User user, LocalDate start, LocalDate end) {
-        return receiptRepository.findAllByUserAndReceiptLocalDateBetween(user, start, end);
     }
 
 }
