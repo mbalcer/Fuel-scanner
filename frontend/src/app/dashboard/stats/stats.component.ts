@@ -43,7 +43,6 @@ export class StatsComponent implements OnInit {
     });
     this.statsService.getAllCounterStats(this.user).subscribe(n => {
       this.counterStats = n;
-      console.log(n);
     });
   }
 
@@ -66,7 +65,7 @@ export class StatsComponent implements OnInit {
   }
 
   changeStats(statsType) {
-    this.selectedStatsType = statsType;
+    this.selectedStatsType = this.statsType.filter(s => s.value == statsType)[0];
     if (this.selectedStatsType.value == 'tank')
         this.columnNames = ['Data', 'Koszt paliwa', 'Zatankowane paliwo'];
     else if (this.selectedStatsType.value == 'fuel')

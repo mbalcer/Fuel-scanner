@@ -3,8 +3,8 @@
     <div class="choose-stats">
         <mat-form-field>
             <mat-label>Wybierz rodzaj statystyk</mat-label>
-            <mat-select>
-                <mat-option *ngFor="let stat of statsType" [value]="stat.value" (onSelectionChange)="changeStats(stat)">
+            <mat-select (selectionChange)="changeStats($event.value)">
+                <mat-option *ngFor="let stat of statsType" [value]="stat.value" >
                     {{stat.viewValue}}
                 </mat-option>
             </mat-select>
