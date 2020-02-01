@@ -74,19 +74,24 @@ public class StatsService {
 
     public List<CounterStats> getCounterStatsByUser(User user) {
         ArrayList<CounterStats> counterStats = new ArrayList<>();
-
         counterRepository.findAllByUser(user)
                 .stream()
                 .sorted(Comparator.comparing(Counter::getCounterLocalDate))
                 .reduce((counter, counter2) -> {
+
+                    List<Receipt> receipts = receiptRepository.findAllByUserAndReceiptLocalDateBetween(
+                            user, counter.getCounterLocalDate(), counter2.getCounterLocalDate());
+
                     CounterStats cs = new CounterStats(counter.getCounterLocalDate(),
                             counter2.getCounterLocalDate(),
                             counter2.getCounterState() - counter.getCounterState(),
                             counter.getFuelTank() - counter2.getFuelTank()
-                                    + receiptRepository.findAllByUserAndReceiptLocalDateBetween(
-                                    user, counter.getCounterLocalDate(), counter2.getCounterLocalDate())
-                                    .stream().mapToDouble(Receipt::getLitres).sum(),
-                            1, 1);
+                                    + receipts.stream()
+                                    .mapToDouble(Receipt::getLitres).sum(),
+                            receipts.stream()
+                                    .mapToDouble(Receipt::getLitres).sum(),
+                            receipts.stream()
+                                    .mapToDouble(Receipt::getCost).sum());
 
                     //TODO What if user forgot to add receipt(he has now more fuel in tank than earlier) -> Fuel consumed will be negative
                     //Example: InitService -> counter 11
