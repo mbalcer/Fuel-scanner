@@ -1,1 +1,46 @@
-<p>stats works!</p>
+<div class="container-stats">
+    <h1>Statystyki</h1>
+    <div class="choose-stats">
+        <mat-form-field>
+            <mat-label>Wybierz rodzaj statystyk</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let stat of statsType" [value]="stat.value" (onSelectionChange)="changeStats($event.source.value)">
+                    {{stat.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="view-stats">
+        <div class="tank-stats" *ngIf="selectedStatsType == 'tank'">
+            <h3>Suma tankowania</h3>
+
+            <table mat-table [dataSource]="receiptStats" class="mat-elevation-z8 table-tank-stats">
+                <ng-container matColumnDef="yearMonth">
+                    <th mat-header-cell *matHeaderCellDef> Data </th>
+                    <td mat-cell *matCellDef="let element"> {{element.yearMonth}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="litres">
+                    <th mat-header-cell *matHeaderCellDef> Suma zatankowanego paliwa (l) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.litres}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cost">
+                    <th mat-header-cell *matHeaderCellDef> Koszt paliwa (zł) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.cost}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="['yearMonth', 'litres', 'cost']; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['yearMonth', 'litres', 'cost'];"></tr>
+            </table>
+
+            <google-chart #chart
+                          [title]="title"
+                          [type]="type"
+                          [data]="dataChart"
+                          [columnNames]="columnNames"
+                          class="chart">
+            </google-chart>
+        </div>
+    </div>
+</div>

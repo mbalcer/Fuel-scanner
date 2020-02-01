@@ -1,0 +1,25 @@
+:host {
+    width: 80%;
+}
+
+.container-stats {
+    width: 100%;
+}
+
+h1, h3, .choose-stats {
+    text-align: center;
+}
+
+.choose-stats, .view-stats, .chart {
+    width: 80%;
+    margin: 1em 10% 0 10%;
+}
+
+.choose-stats > mat-form-field {
+    width: 50%;
+}
+
+.table-tank-stats {
+    width: 80%;
+    margin: 1em 10% 0 10%;
+}

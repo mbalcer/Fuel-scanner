@@ -11,6 +11,16 @@ export class StatsComponent implements OnInit {
 
   user = "aniaNowicka"; //TODO change user
   receiptStats: ReceiptStats[];
+  statsType: StatsType[] = [
+      {value: "tank", viewValue: "Suma tankowania"},
+      {value: "fuel", viewValue: "Koszty paliwa"}
+  ];
+  selectedStatsType: string;
+
+  title = 'Wykres';
+  type = 'LineChart';
+  dataChart = [];
+  columnNames = ['Data', 'Koszt paliwa', "Zatankowane paliwo"];
 
   constructor(private statsService: StatsService) {
     this.getAllStatsByUser();
@@ -22,7 +32,23 @@ export class StatsComponent implements OnInit {
   private getAllStatsByUser() {
     this.statsService.getAllStats(this.user).subscribe(n => {
       this.receiptStats = n;
-      console.log(this.receiptStats);
+      this.prepareData(n);
     });
   }
+
+  private prepareData(data) {
+    data.forEach(i => {
+      this.dataChart.push([i.yearMonth, i.cost, i.litres]);
+    });
+  }
+
+  changeStats(event) {
+    this.selectedStatsType = event;
+  }
 }
+
+export interface StatsType {
+    value: string,
+    viewValue: string
+}
+
