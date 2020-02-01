@@ -55,9 +55,9 @@ public class InitService {
                 receipt5, receipt6, receipt7, receipt8, receipt9, receipt10, receipt11));
 
         Counter c1 = new Counter(0L, 135567.00, LocalDate.now().minusDays(36), 14.00, u1);
-        Counter c2 = new Counter(0L, 135678.00, LocalDate.now().minusDays(8), 7.00, u1);
-        Counter c3 = new Counter(0L, 235753.00, LocalDate.now().minusDays(48), 11.00, u2);
-        Counter c4 = new Counter(0L, 237765.00, LocalDate.now().minusDays(15), 9.00, u2);
+        Counter c2 = new Counter(0L, 135978.00, LocalDate.now().minusDays(8), 7.00, u1);
+        Counter c3 = new Counter(0L, 235753.00, LocalDate.now().minusDays(48), 10.00, u2);
+        Counter c4 = new Counter(0L, 236165.00, LocalDate.now().minusDays(15), 9.00, u2);
 
         Counter c5 = new Counter(0L, 58442.00, LocalDate.now().minusDays(73), 65.08, u3);
         Counter c6 = new Counter(0L, 58554.00, LocalDate.now().minusDays(60), 56.23, u3);
@@ -74,6 +74,5 @@ public class InitService {
         Counter c13 = new Counter(0L, 61082.00, LocalDate.now().minusDays(2), 3.12, u3);
 
         counterRepository.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c12, c13));
-
     }
 }
