@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 
 import {Receipt} from "../../model/receipt";
 import {OcrService} from "../../service/ocr.service";
+import {ReceiptService} from "../../service/receipt.service";
+import {AuthenticationService} from "../../service/authentication.service";
+import {User} from "../../model/user";
 
 @Component({
   selector: 'app-scanner',
@@ -14,28 +17,41 @@ export class ScannerComponent implements OnInit {
   fileToUpload: File;
   url: string;
   progress: boolean;
+  user: User = {
+    login: '',
+    name: '',
+    password: '',
+    email: ''
+  };
 
-  constructor(private ocrService: OcrService) {
-    this.receipt = {
-      url: '',
-      content: '',
-      receiptLocalDate: '',
-      litres: null,
-      pricePerLitres: null,
-      cost: null,
-      user: {
-        login: '',
-        name: '',
-        password: '',
-        email: ''
-      }
-    };
+  constructor(private ocrService: OcrService, private receiptService: ReceiptService, private userService: AuthenticationService) {
+    this.userService.getUser().subscribe(n => {
+       this.user = n;
+    });
+    this.clearReceipt();
     this.fileToUpload = null;
     this.url = '';
     this.progress = false;
   }
 
   ngOnInit() {
+  }
+
+  clearReceipt() {
+      this.receipt = {
+          url: '',
+          content: '',
+          receiptLocalDate: '',
+          litres: null,
+          pricePerLitres: null,
+          cost: null,
+          user: {
+              login: '',
+              name: '',
+              password: '',
+              email: ''
+          }
+      };
   }
 
   scanReceipt() {
@@ -55,6 +71,13 @@ export class ScannerComponent implements OnInit {
     } else {
       console.log("error");
     }
+  }
+
+  saveReceipt() {
+      this.receipt.user = this.user;
+      this.receiptService.saveReceipt(this.receipt).subscribe(n => {
+         this.clearReceipt();
+      });
   }
 
   onFileSelected(files : FileList) {

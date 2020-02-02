@@ -2,12 +2,12 @@
   <div class="form">
     <div class="title">FUEL SCANNER</div>
     <form name="form">
-        <input type="text" placeholder="Full name"/>
-        <input type="text" placeholder="Email"/>
-        <input type="text" placeholder="Login"/>
-        <input type="password" placeholder="Password"/>
-        <a routerLink="/dashboard"><button>SIGN UP</button></a>
+        <input type="text" placeholder="Full name" [(ngModel)]="name" [ngModelOptions]="{standalone: true}"/>
+        <input type="text" placeholder="Email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}"/>
+        <input type="text" placeholder="Login" [(ngModel)]="login" [ngModelOptions]="{standalone: true}"/>
+        <input type="password" placeholder="Password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}"/>
+        <a (click)=register()><button>SIGN UP</button></a>
     </form>
-    <p>If you already have an account, just <strong><a routerLink="">log in!</a></strong></p>
+    <p>If you already have an account, just <strong><a routerLink="/login">log in!</a></strong></p>
   </div>
 </div>

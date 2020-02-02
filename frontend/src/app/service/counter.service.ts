@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders } from "@angular/common/http";
 import {Counter} from "../model/counter";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
@@ -15,10 +15,14 @@ export class CounterService {
   constructor(private http: HttpClient) { }
 
   saveCounter(counter: Counter): Observable<Counter> {
-    return this.http.post<Counter>(this.SAVE_COUNTER_URL, counter);
+    let admin = 'admin';
+    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(admin + ':' + admin) });
+    return this.http.post<Counter>(this.SAVE_COUNTER_URL, counter, {headers});
   }
 
   getAllCounterByUser(login: string): Observable<Counter[]> {
-    return this.http.get<Counter[]>(this.GET_COUNTER_BY_USER_URL + login);
+    let admin = 'admin';
+    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(admin + ':' + admin) });
+    return this.http.get<Counter[]>(this.GET_COUNTER_BY_USER_URL + login, {headers});
   }
 }

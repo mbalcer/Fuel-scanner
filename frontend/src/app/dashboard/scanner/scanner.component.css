@@ -37,3 +37,7 @@ h1, .or {
 .recognize-list {
   margin: 3em 10%;
 }
+
+.edit-field {
+  margin-left: 1em;
+}

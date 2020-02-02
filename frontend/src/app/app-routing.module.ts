@@ -9,6 +9,7 @@ import {StatsComponent} from "./dashboard/stats/stats.component";
 import {InformationComponent} from "./dashboard/information/information.component";
 import {HomePageComponent} from "./dashboard/home-page/home-page.component";
 import { RegistrationComponent } from "./registration/registration.component";
+import { AuthGaurdService } from './service/auth-gaurd.service';
 
 const routes: Routes = [
   {
@@ -18,43 +19,54 @@ const routes: Routes = [
       {
         path: '',
         component: HomePageComponent,
-        outlet: 'panel'
+        outlet: 'panel',
+        canActivate:[AuthGaurdService]
       },
       {
         path: 'scanner',
         component: ScannerComponent,
-        outlet: 'panel'
+        outlet: 'panel',
+        canActivate:[AuthGaurdService]
       },
       {
         path: 'counter',
         component: CounterComponent,
-        outlet: 'panel'
+        outlet: 'panel',
+        canActivate:[AuthGaurdService]
       },
       {
         path: 'history',
         component: HistoryComponent,
-        outlet: 'panel'
+        outlet: 'panel',
+        canActivate:[AuthGaurdService]
       },
       {
         path: 'stats',
         component: StatsComponent,
-        outlet: 'panel'
+        outlet: 'panel',
+        canActivate:[AuthGaurdService]
       },
       {
         path: 'info',
         component: InformationComponent,
-        outlet: 'panel'
+        outlet: 'panel',
+        canActivate:[AuthGaurdService]
       }
     ]
   },
   {
-    path: '',
+    path: 'login',
     component: LoginPanelComponent,
   },
   {
     path: 'registration',
     component: RegistrationComponent,
-  }
+  },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
+   }
 ];
 
 @NgModule({
