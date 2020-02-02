@@ -21,6 +21,10 @@ import java.math.RoundingMode;
 import java.net.URL;
 import java.time.LocalDate;
 
+import static org.bytedeco.javacpp.opencv_imgcodecs.cvLoadImage;
+import static org.bytedeco.javacpp.opencv_imgcodecs.cvSaveImage;
+
+
 @RestController
 @RequestMapping("/api/ocr")
 @CrossOrigin
@@ -29,6 +33,7 @@ public class OcrController {
     private ReceiptService receiptService;
     private FileService fileService;
     private UserService userService;
+
     @Autowired
     public ReceiptScanning receiptScanning = new ReceiptScanning();
     @Autowired
@@ -51,7 +56,7 @@ public class OcrController {
             BufferedImage bufferedImage = ImageIO.read(imageFile);
             File f = new File(System.getProperty("user.home")+File.separator+"forOCR.jpeg");
             ImageIO.write(bufferedImage,"jpeg",f);
-            checkReceipt(f.getPath());
+            checkReceipt(receipt,f.getPath());
             f.delete();
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,52 +72,54 @@ public class OcrController {
         String content = ocrService.doOcr(localFile);
         //For testing: receipt is owned by User1
         //Later change: receipt is owned by logged user
-        Receipt receipt = new Receipt(0L, localFile.getAbsolutePath(), content, LocalDate.now(), 0.0, 0.0, 0.0, userService.getUser(1L));
+        Receipt receipt = new Receipt(0L, localFile.getAbsolutePath(), content, null, 0.0, 0.0, 0.0, userService.getUser(1L));
 
         receipt = receiptService.find(receipt);
-        checkReceipt(localFile.getPath());
+        checkReceipt(receipt, localFile.getPath());
         return receipt;
     }
-    public void checkReceipt(String path)
+    public void checkReceipt(Receipt receipt,String path)
     {
-        long lastReceipt = receiptService.getReceipts().size();
 
-        if(receiptService.getReceipt(lastReceipt).getLitres()==0.0)
+        if(receipt.getLitres()==0.0)
         {
+            System.out.println("jesteeeeem");
             opencv_core.IplImage resizeIMG = receiptScanning.beforeSmooth(path);
-            //opencv_core.IplImage squareEdgeDetectionImage = receiptScanning.squareEdgeDetection(resizeIMG,30);
-            // opencv_core.CvSeq findedSquareIMG = receiptScanning.findLargestSquare(squareEdgeDetectionImage);
-            //opencv_core.IplImage afterTransformIMG = receiptScanning.applyPerspectiveTransformThresholdOnOriginalImage(resizeIMG,findedSquareIMG,30);
-            //opencv_core.IplImage downScaleIMG = receiptScanning.downScaleImage(resizeIMG,100);
-
-            File afterSmoothing = receiptScanning.cleanImageSmoothingForOCR(resizeIMG);
-            String content = ocrService.doOcr(afterSmoothing);
-            Receipt newReceipt = receiptService.getReceipt(lastReceipt);
+            File afterScanning = scanning(resizeIMG);
+            String content = ocrService.doOcr(afterScanning);
             receiptService.getCount(content).entries().stream().forEach(l-> {
                 Double cost = BigDecimal.valueOf(l.getKey() * l.getValue())
                         .setScale(2, RoundingMode.FLOOR)
                         .doubleValue();
-                newReceipt.setLitres(l.getKey());
-                newReceipt.setPricePerLitres(l.getValue());
-                newReceipt.setCost(cost);
+                receipt.setLitres(l.getKey());
+                receipt.setPricePerLitres(l.getValue());
+                receipt.setCost(cost);
                     }
             );
-            receiptService.updateReceipt(newReceipt);
 
         }
-        if(receiptService.getReceipt(lastReceipt).getReceiptLocalDate()==null)
+        if(receipt.getReceiptLocalDate()==null)
         {
             opencv_core.IplImage resizeIMG = receiptScanning.beforeSmooth(path);
-            //opencv_core.IplImage squareEdgeDetectionImage = receiptScanning.squareEdgeDetection(resizeIMG,30);
-            // opencv_core.CvSeq findedSquareIMG = receiptScanning.findLargestSquare(squareEdgeDetectionImage);
-            //opencv_core.IplImage afterTransformIMG = receiptScanning.applyPerspectiveTransformThresholdOnOriginalImage(resizeIMG,findedSquareIMG,30);
-            //opencv_core.IplImage downScaleIMG = receiptScanning.downScaleImage(resizeIMG,100);
-
+            File afterScanning = scanning(resizeIMG);
+            String content = ocrService.doOcr(afterScanning);
+            receipt.setReceiptLocalDate(receiptService.getDate(content));
+        }
+    }
+    public File scanning(opencv_core.IplImage resizeIMG){
+        boolean wantToRotate = false;
+        if(wantToRotate == true){
+        opencv_core.IplImage squareEdgeDetectionImage = receiptScanning.squareEdgeDetection(resizeIMG,30);
+        opencv_core.CvSeq findedSquareIMG = receiptScanning.findLargestSquare(squareEdgeDetectionImage);
+        opencv_core.IplImage afterTransformIMG = receiptScanning.applyPerspectiveTransformThresholdOnOriginalImage(resizeIMG,findedSquareIMG,30);
+        File afterRotatingAndSmoothing = receiptScanning.cleanImageSmoothingForOCR(afterTransformIMG);
+       // opencv_core.IplImage afterSmoothingIMG =  cvLoadImage(afterSmoothing.getAbsolutePath());
+      //  File finalImage = receiptScanning.rotateImage(afterSmoothingIMG);
+        return afterRotatingAndSmoothing;
+        }
+        else{
             File afterSmoothing = receiptScanning.cleanImageSmoothingForOCR(resizeIMG);
-            String content = ocrService.doOcr(afterSmoothing);
-            Receipt newReceipt = receiptService.getReceipt(lastReceipt);
-            newReceipt.setReceiptLocalDate(receiptService.getDate(content));
-            receiptService.updateReceipt(newReceipt);
+            return afterSmoothing;
         }
     }
 }
