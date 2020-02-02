@@ -33,7 +33,7 @@ public class StatsController {
 
     @GetMapping("/receiptStats/{login}")
     public List<ReceiptStats> getReceiptStatsByUserLogin(@PathVariable String login) {
-        return statsService.getReceiptStatsyByUserGroupedByYearMonth(userService.getUserByLogin(login))
+        return statsService.getReceiptStatsyByUserGroupedByYearMonth(userService.getUserByLogin(login).get())
                 .stream()
                 .map(ReceiptStats::roundTo2DecimalPlaces)
                 .collect(Collectors.toList());
@@ -41,17 +41,17 @@ public class StatsController {
 
     @GetMapping("/allReceiptLitres/{login}")
     public double getAllReceiptLitresByUserLogin(@PathVariable String login) {
-        return Double.valueOf(df.format(statsService.getAllReceiptLitresByUser(userService.getUserByLogin(login))));
+        return Double.valueOf(df.format(statsService.getAllReceiptLitresByUser(userService.getUserByLogin(login).get())));
     }
 
     @GetMapping("/allReceiptCost/{login}")
     public double getAllReceiptCostByUserLogin(@PathVariable String login) {
-        return Double.valueOf(df.format(statsService.getAllReceiptCostByUser(userService.getUserByLogin(login))));
+        return Double.valueOf(df.format(statsService.getAllReceiptCostByUser(userService.getUserByLogin(login).get())));
     }
 
     @GetMapping("/counterStats/{login}")
     public List<CounterStats> getCounterStatsByUserLogin(@PathVariable String login) {
-        return statsService.getCounterStatsByUser(userService.getUserByLogin(login))
+        return statsService.getCounterStatsByUser(userService.getUserByLogin(login).get())
                 .stream()
                 .map(CounterStats::roundTo2DecimalPlaces)
                 .collect(Collectors.toList());

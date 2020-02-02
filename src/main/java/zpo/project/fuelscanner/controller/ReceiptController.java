@@ -39,7 +39,7 @@ public class ReceiptController {
 
     @PostMapping
     public Receipt save(@RequestBody Receipt receipt) {
-        User user = userService.getUserByLogin(receipt.getUser().getLogin());
+        User user = userService.getUserByLogin(receipt.getUser().getLogin()).get();
         receipt.setUser(user);
         return receiptService.createReceipt(receipt);
     }

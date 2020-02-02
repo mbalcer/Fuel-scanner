@@ -25,16 +25,40 @@ public class UserController {
         return userList;
     }
 
-    @GetMapping("/{id}")
-    public User getUser(@PathVariable long id) {
-          return userService.getUser(id);
+    @RequestMapping(value = "/{login}",
+            method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+
+    public ResponseEntity<User> getUser(@PathVariable("login") String login) {
+        Optional<User> user = userService.getUserByLogin(login);
+
+        if(!user.isPresent()){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        else{
+            return new ResponseEntity<>(user.get(), HttpStatus.OK);
+        }
+    }
+
+    @RequestMapping(value = "/name/{login}",
+            method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+
+    public ResponseEntity<String> getUsername(@PathVariable("login") String login) {
+        Optional<User> user = userService.getUserByLogin(login);
+
+        if(!user.isPresent()){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        else{
+            String username = user.get().getName().split(" ")[0];
+            return new ResponseEntity<>(username, HttpStatus.OK);
+        }
     }
 
     @RequestMapping(value = "/validate/{login}/{password}",
             method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+
     public ResponseEntity<Long> validate(@PathVariable("login") String login,
                                     @PathVariable("password") String password) {
-
         Optional<User> user = userService.checkUser(login, password);
 
         if(!user.isPresent()){

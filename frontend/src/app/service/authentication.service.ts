@@ -13,10 +13,10 @@ export class User{
 })
 export class AuthenticationService {
 
-  constructor(
-    private httpClient:HttpClient
-  ) {
-     }
+  username: string;
+  user: User;
+
+  constructor( private httpClient:HttpClient) { }
 
      authenticate(login: string, password: string) {
       let admin = 'admin'
@@ -42,4 +42,42 @@ export class AuthenticationService {
   logOut() {
     sessionStorage.removeItem('username')
   }
+
+  getLogin(){
+    let login = sessionStorage.getItem('username');
+    return login;
+  }
+
+  getUsername(){
+    this.findUsername();
+    return this.username;
+  }
+
+  findUsername(){
+    let login = this.getLogin()
+    let admin = 'admin'
+    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(admin + ':' + admin) });
+
+    return this.httpClient.get<string>("http://localhost:8080/api/user/name/" + login, {headers}).pipe(
+      map(
+        username => {
+            this.username = username;
+        })
+    )}
+
+  getUser(){
+    this.findUser();
+    return this.user;
+  }
+
+  findUser(){
+    let login = this.getLogin()
+    let admin = 'admin'
+    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(admin + ':' + admin) });
+
+    return this.httpClient.get<User>("http://localhost:8080/api/user/" + login, {headers}).pipe(
+      map( user => {
+         this.user = user;
+         } )
+    )}
 }

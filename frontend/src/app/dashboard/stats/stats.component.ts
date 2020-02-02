@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {StatsService} from "../../service/stats.service";
 import {ReceiptStats} from "../../model/receipt-stats";
 import {CounterStats} from "../../model/counter-stats";
+import { AuthenticationService } from '../../service/authentication.service';
 
 @Component({
   selector: 'app-stats',
@@ -10,7 +11,7 @@ import {CounterStats} from "../../model/counter-stats";
 })
 export class StatsComponent implements OnInit {
 
-  user = "aniaNowicka"; //TODO change user
+  user: string;
   receiptStats: ReceiptStats[] = [];
   counterStats: CounterStats[] = [];
   statsType: StatsType[] = [
@@ -30,11 +31,17 @@ export class StatsComponent implements OnInit {
   dataChart = [];
   columnNames = [];
 
-  constructor(private statsService: StatsService) {
+  constructor(private statsService: StatsService, private service: AuthenticationService) {
+    this.getLogin();
     this.getAllStatsByUser();
   }
 
   ngOnInit() {
+  }
+
+  getLogin(){
+      let login = this.service.getLogin();
+      this.user = login;
   }
 
   private getAllStatsByUser() {

@@ -22,7 +22,8 @@ public class UserService {
         return userRepository.findById(id).get();
     }
 
-    public User getUserByLogin(String login) { return userRepository.findByLogin(login).get(); }
+    public Optional<User> getUserByLogin(String login) {
+        return userRepository.findByLogin(login); }
 
     public User createUser(User user) {
         return userRepository.save(user);

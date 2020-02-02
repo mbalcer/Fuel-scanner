@@ -3,6 +3,7 @@ import {Counter} from "../../model/counter";
 import {CounterService} from "../../service/counter.service";
 import {User} from "../../model/user";
 import {MatTableDataSource} from "@angular/material";
+import { AuthenticationService } from '../../service/authentication.service';
 
 @Component({
   selector: 'app-counter',
@@ -14,16 +15,18 @@ export class CounterComponent implements OnInit {
   dataSource = new MatTableDataSource<Counter>();
   counterList: Counter[];
 
-    user: User = {
-    login: 'janKowalski',
-    name: 'Jan Kowalski',
-    password: 'Qwerty123',
-    email: 'janKowalski@gmail.com'
+  user: User = {
+      login: "janKowalski",
+      name: "Jan Kowalski",
+      password: "Qwerty123",
+      email: "janKowalski@gmail.com"
   };
 
   saveCounter: Counter;
 
-  constructor(private counterService: CounterService) {
+  constructor(private counterService: CounterService,
+                      private service: AuthenticationService) {
+    this.getUser();
     this.cleanSaveCounter();
     this.counterService.getAllCounterByUser(this.user.login).subscribe(n => {
         this.counterList = n;
@@ -56,4 +59,7 @@ export class CounterComponent implements OnInit {
     });
   }
 
+  getUser(){
+    //this.user = this.service.getUser();
+  }
 }
