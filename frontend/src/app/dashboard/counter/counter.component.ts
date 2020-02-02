@@ -48,6 +48,7 @@ export class CounterComponent implements OnInit {
 
   save() {
     this.saveCounter.counterLocalDate = Date.parse(this.saveCounter.counterLocalDate) + "";
+    this.saveCounter.user = this.user;
     this.counterService.saveCounter(this.saveCounter).subscribe(n => {
         this.counterList.push(n);
         this.cleanSaveCounter();

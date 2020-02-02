@@ -18,11 +18,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
-
-import static org.bytedeco.javacpp.opencv_imgcodecs.cvSaveImage;
 
 @RestController
 @RequestMapping("/api/ocr")
@@ -42,16 +39,6 @@ public class OcrController {
         this.userService = userService;
     }
 
-
-//    @PostMapping("/url")
-//    public Graphic doOcr(@RequestBody Graphic graphic) {
-//        String content = ocrService.doOcr(graphic.getUrl());
-//        graphic.setContent(content);
-//        graphic = graphicService.createGraphic(graphic);
-//        fuelSumService.find(content);
-//        return graphic;
-//    }
-
     @PostMapping("/url")
     public Receipt doOcr(@RequestBody String url) {
         Receipt receipt = new Receipt();
@@ -59,7 +46,6 @@ public class OcrController {
         String content = ocrService.doOcr(receipt.getUrl());
         receipt.setContent(content);
         receipt = receiptService.find(receipt);
-//        receipt = receiptService.createReceipt(receipt);
         try {
             URL imageFile = new URL(url);
             BufferedImage bufferedImage = ImageIO.read(imageFile);
@@ -74,17 +60,6 @@ public class OcrController {
         return receipt;
     }
 
-
-//    @PostMapping("/file")
-//    public ResponseEntity<String> doOcr(@RequestParam("file") MultipartFile file) throws IOException {
-//        InputStream inputStream = file.getInputStream();
-//        File localFile = fileService.copyFile(inputStream);
-//        String content = ocrService.doOcr(localFile);
-//        fuelSumService.find(content);
-//
-//        return new ResponseEntity<String>(file.getOriginalFilename(), HttpStatus.OK);
-//    }
-
     @PostMapping("/file")
     public Receipt doOcr(@RequestParam("file") MultipartFile file) throws IOException {
         InputStream inputStream = file.getInputStream();
@@ -95,7 +70,6 @@ public class OcrController {
         Receipt receipt = new Receipt(0L, localFile.getAbsolutePath(), content, LocalDate.now(), 0.0, 0.0, 0.0, userService.getUser(1L));
 
         receipt = receiptService.find(receipt);
-//        receiptService.updateReceipt(receipt);
         checkReceipt(localFile.getPath());
         return receipt;
     }
