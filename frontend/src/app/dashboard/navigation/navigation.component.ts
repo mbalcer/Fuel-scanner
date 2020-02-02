@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {MatIconRegistry} from "@angular/material";
 import {DomSanitizer} from "@angular/platform-browser";
-import { AuthenticationService } from '../../service/authentication.service';
-import { Router } from '@angular/router';
+import {AuthenticationService} from '../../service/authentication.service';
+import {Router} from '@angular/router';
+import {User} from "../../model/user";
 
 @Component({
   selector: 'app-navigation',
@@ -11,11 +12,16 @@ import { Router } from '@angular/router';
 })
 export class NavigationComponent implements OnInit {
 
-  name: string = "user"
+  user: User = {
+    login: '',
+    name: '',
+    password: '',
+    email: ''
+  };
 
   constructor(private router: Router, private service: AuthenticationService,
             private iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-
+    this.getName();
     iconRegistry.addSvgIcon('scan', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/scan.svg'));
     iconRegistry.addSvgIcon('history', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/history.svg'));
     iconRegistry.addSvgIcon('counter', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/counter.svg'));
@@ -27,13 +33,13 @@ export class NavigationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getName();
+
   }
 
   getName(){
-    this.service.getUsername().subscribe(
-        data => this.name = data
-    );
+    this.service.getUser().subscribe(data => {
+      this.user = data;
+    });
   }
 
   logout(){
