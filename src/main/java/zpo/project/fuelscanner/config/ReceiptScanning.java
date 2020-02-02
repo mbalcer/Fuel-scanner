@@ -127,8 +127,10 @@ public class ReceiptScanning {
         IplImage destImage = cvCloneImage(warpImage);
         cvWarpPerspective(warpImage, destImage, homography, CV_INTER_LINEAR,
                 CvScalar.ZERO);
-
-        return cropImage(destImage, 0, 0, resultWidth, resultHeight);
+        IplImage cropping = cropImage(destImage, 0, 0, resultWidth, resultHeight);
+        File f = new File(System.getProperty("user.home")+File.separator+"afterApplyadCrop.jpeg");
+        cvSaveImage(f.getAbsolutePath(),cropping);
+        return cropping;
     }
 
     public IplImage cropImage(IplImage srcImage, int fromX, int fromY,
@@ -143,13 +145,29 @@ public class ReceiptScanning {
     {
         IplImage destImage = cvCreateImage(cvGetSize(srcImage),IPL_DEPTH_8U,1);
         cvCvtColor(srcImage,destImage,CV_BGR2GRAY);
-        //cvSmooth(destImage,destImage,CV_MEDIAN,3,0,0,0);
-        //cvSmooth(destImage, destImage, CV_GAUSSIAN, 3, 1, 1, 0);
+        //cvSmooth(destImage,destImage,CV_MEDIAN,1,0,0,0);
+      //  cvSmooth(destImage, destImage, CV_GAUSSIAN, 3, 1, 1, 0);
         cvThreshold(destImage,destImage,0,255,CV_THRESH_OTSU + CV_THRESH_BINARY);
         cvSmooth(destImage,destImage,CV_MEDIAN,1,0,0,0);
        // cvAdaptiveThreshold(destImage, 255,CV_ADAPTIVE_THRESH_GAUSSIAN_C, CV_THRESH_BINARY, 31);
         File f = new File(System.getProperty("user.home")+File.separator+"afterSmoothing.jpeg");
         cvSaveImage(f.getAbsolutePath(),destImage);
+        return f;
+    }
+    public static File rotateImage(IplImage srcImage){
+        IplImage destImage = cvCloneImage(srcImage);
+        IplImage rotatedImage = cvCreateImage(cvGetSize(destImage), destImage.depth(), destImage.nChannels());
+        CvMat matrix = cvCreateMat(2,3, CV_32FC1);
+
+        CvPoint2D32f centerPoint = new CvPoint2D32f();
+        centerPoint.x(destImage.width()/2);
+        centerPoint.y(destImage.height()/2);
+
+        cv2DRotationMatrix(centerPoint, 270, 0.6, matrix);
+
+        cvWarpAffine(destImage, rotatedImage, matrix, CV_INTER_CUBIC + CV_WARP_FILL_OUTLIERS, cvScalar(170));
+        File f = new File(System.getProperty("user.home")+File.separator+"afterRotating.jpeg");
+        cvSaveImage(f.getAbsolutePath(),rotatedImage);
         return f;
     }
 }
