@@ -15,18 +15,13 @@ export class CounterComponent implements OnInit {
   dataSource = new MatTableDataSource<Counter>();
   counterList: Counter[];
 
-  user: User = {
-      login: "janKowalski",
-      name: "Jan Kowalski",
-      password: "Qwerty123",
-      email: "janKowalski@gmail.com"
-  };
+  user: User;
 
   saveCounter: Counter;
 
   constructor(private counterService: CounterService,
                       private service: AuthenticationService) {
-    this.getUser();
+
     this.cleanSaveCounter();
     this.counterService.getAllCounterByUser(this.user.login).subscribe(n => {
         this.counterList = n;
@@ -35,6 +30,7 @@ export class CounterComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getUser();
   }
 
   cleanSaveCounter() {
@@ -60,6 +56,8 @@ export class CounterComponent implements OnInit {
   }
 
   getUser(){
-    //this.user = this.service.getUser();
+    this.service.getUser().subscribe(
+        data => this.user = data
+    );
   }
 }

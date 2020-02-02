@@ -11,12 +11,11 @@ import { Router } from '@angular/router';
 })
 export class NavigationComponent implements OnInit {
 
-  name: string;
+  name: string = "user"
 
   constructor(private router: Router, private service: AuthenticationService,
             private iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
 
-    this.getName();
     iconRegistry.addSvgIcon('scan', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/scan.svg'));
     iconRegistry.addSvgIcon('history', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/history.svg'));
     iconRegistry.addSvgIcon('counter', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/counter.svg'));
@@ -28,10 +27,13 @@ export class NavigationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getName();
   }
 
   getName(){
-    this.name = this.service.getUsername();
+    this.service.getUsername().subscribe(
+        data => this.name = data
+    );
   }
 
   logout(){

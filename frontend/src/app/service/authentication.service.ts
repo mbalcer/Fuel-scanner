@@ -1,20 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-
-export class User{
-  constructor(
-    public status:string,
-     ) {}
-}
+import {User} from "../model/user";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-
-  username: string;
-  user: User;
 
   constructor( private httpClient:HttpClient) { }
 
@@ -49,35 +41,18 @@ export class AuthenticationService {
   }
 
   getUsername(){
-    this.findUsername();
-    return this.username;
-  }
-
-  findUsername(){
     let login = this.getLogin()
     let admin = 'admin'
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(admin + ':' + admin) });
 
-    return this.httpClient.get<string>("http://localhost:8080/api/user/name/" + login, {headers}).pipe(
-      map(
-        username => {
-            this.username = username;
-        })
-    )}
+    return this.httpClient.get<string>("http://localhost:8080/api/user/name/" + login, {headers});
+  }
 
   getUser(){
-    this.findUser();
-    return this.user;
-  }
-
-  findUser(){
     let login = this.getLogin()
     let admin = 'admin'
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(admin + ':' + admin) });
 
-    return this.httpClient.get<User>("http://localhost:8080/api/user/" + login, {headers}).pipe(
-      map( user => {
-         this.user = user;
-         } )
-    )}
+    return this.httpClient.get<User>("http://localhost:8080/api/user/" + login, {headers});
+  }
 }
