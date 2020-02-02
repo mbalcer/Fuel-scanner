@@ -21,12 +21,10 @@ import java.math.RoundingMode;
 import java.net.URL;
 import java.time.LocalDate;
 
-<<<<<<< HEAD
 import static org.bytedeco.javacpp.opencv_imgcodecs.cvLoadImage;
 import static org.bytedeco.javacpp.opencv_imgcodecs.cvSaveImage;
 
-=======
->>>>>>> 9a557d69305a5d3152d760ee7b9d8d22b8fefe79
+
 @RestController
 @RequestMapping("/api/ocr")
 @CrossOrigin
