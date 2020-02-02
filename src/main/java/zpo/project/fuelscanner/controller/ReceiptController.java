@@ -3,7 +3,9 @@ package zpo.project.fuelscanner.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import zpo.project.fuelscanner.model.Receipt;
+import zpo.project.fuelscanner.model.User;
 import zpo.project.fuelscanner.service.ReceiptService;
+import zpo.project.fuelscanner.service.UserService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +16,10 @@ import java.util.stream.Collectors;
 public class ReceiptController {
 
     @Autowired
-    ReceiptService receiptService;
+    private ReceiptService receiptService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/all")
     public List<Receipt> getReceipts() {
@@ -32,4 +37,10 @@ public class ReceiptController {
         return receiptService.getReceipts().stream().limit(1).collect(Collectors.toList()).get(0);
     }
 
+    @PostMapping
+    public Receipt save(@RequestBody Receipt receipt) {
+        User user = userService.getUserByLogin(receipt.getUser().getLogin());
+        receipt.setUser(user);
+        return receiptService.createReceipt(receipt);
+    }
 }

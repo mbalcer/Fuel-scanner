@@ -2,15 +2,12 @@ package zpo.project.fuelscanner.controller;
 
 import org.bytedeco.javacpp.opencv_core;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import zpo.project.fuelscanner.config.ReceiptScanning;
 import zpo.project.fuelscanner.model.Receipt;
-import zpo.project.fuelscanner.service.OcrService;
 import zpo.project.fuelscanner.service.FileService;
+import zpo.project.fuelscanner.service.OcrService;
 import zpo.project.fuelscanner.service.ReceiptService;
 import zpo.project.fuelscanner.service.UserService;
 
@@ -54,7 +51,7 @@ public class OcrController {
         String content = ocrService.doOcr(receipt.getUrl());
         receipt.setContent(content);
         receipt = receiptService.find(receipt);
-        receipt = receiptService.createReceipt(receipt);
+//        receipt = receiptService.createReceipt(receipt);
 
         return receipt;
     }
@@ -83,12 +80,10 @@ public class OcrController {
         receiptScanning.cleanImageSmoothingForOCR(downScaleIMG);
         //For testing: receipt is owned by User1
         //Later change: receipt is owned by logged user
-        Receipt receipt = receiptService.createReceipt(
-                new Receipt(0L, "", content, LocalDate.now(), 0.0, 0.0, 0.0,
-                        userService.getUser(1L)));
+        Receipt receipt = new Receipt(0L, localFile.getAbsolutePath(), content, LocalDate.now(), 0.0, 0.0, 0.0, userService.getUser(1L));
 
         receipt = receiptService.find(receipt);
-        receiptService.updateReceipt(receipt);
+//        receiptService.updateReceipt(receipt);
 
         return receipt;
     }
