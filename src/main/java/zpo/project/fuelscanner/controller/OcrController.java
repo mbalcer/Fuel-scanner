@@ -19,10 +19,6 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
-import java.time.LocalDate;
-
-import static org.bytedeco.javacpp.opencv_imgcodecs.cvLoadImage;
-import static org.bytedeco.javacpp.opencv_imgcodecs.cvSaveImage;
 
 
 @RestController
@@ -33,6 +29,7 @@ public class OcrController {
     private ReceiptService receiptService;
     private FileService fileService;
     private UserService userService;
+    private boolean wantToRotate = false;
 
     @Autowired
     public ReceiptScanning receiptScanning = new ReceiptScanning();
@@ -44,8 +41,9 @@ public class OcrController {
         this.userService = userService;
     }
 
-    @PostMapping("/url")
-    public Receipt doOcr(@RequestBody String url) {
+    @PostMapping("/url/{turned}")
+    public Receipt doOcr(@RequestBody String url, @PathVariable boolean turned) {
+        this.wantToRotate = turned;
         Receipt receipt = new Receipt();
         receipt.setUrl(url);
         String content = ocrService.doOcr(receipt.getUrl());
@@ -65,8 +63,9 @@ public class OcrController {
         return receipt;
     }
 
-    @PostMapping("/file")
-    public Receipt doOcr(@RequestParam("file") MultipartFile file) throws IOException {
+    @PostMapping("/file/{turned}")
+    public Receipt doOcr(@RequestParam("file") MultipartFile file, @PathVariable boolean turned) throws IOException {
+        this.wantToRotate = turned;
         InputStream inputStream = file.getInputStream();
         File localFile = fileService.copyFile(inputStream);
         String content = ocrService.doOcr(localFile);
@@ -107,7 +106,6 @@ public class OcrController {
         }
     }
     public File scanning(opencv_core.IplImage resizeIMG){
-        boolean wantToRotate = false;
         if(wantToRotate == true){
         opencv_core.IplImage squareEdgeDetectionImage = receiptScanning.squareEdgeDetection(resizeIMG,30);
         opencv_core.CvSeq findedSquareIMG = receiptScanning.findLargestSquare(squareEdgeDetectionImage);
