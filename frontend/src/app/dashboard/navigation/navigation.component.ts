@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {MatIconRegistry} from "@angular/material";
 import {DomSanitizer} from "@angular/platform-browser";
+import { AuthenticationService } from '../../service/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -11,7 +13,8 @@ export class NavigationComponent implements OnInit {
 
   user = "Mateusz";
 
-  constructor(private iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+  constructor(private router: Router, private service: AuthenticationService,
+            private iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon('scan', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/scan.svg'));
     iconRegistry.addSvgIcon('history', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/history.svg'));
     iconRegistry.addSvgIcon('counter', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/counter.svg'));
@@ -25,4 +28,8 @@ export class NavigationComponent implements OnInit {
   ngOnInit() {
   }
 
+  logout(){
+      this.service.logOut();
+      this.router.navigate(['login']);
+  }
 }

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders } from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Receipt} from "../model/receipt";
 import {environment} from "../../environments/environment";
@@ -15,10 +15,14 @@ export class ReceiptService {
   constructor(private http: HttpClient) { }
 
   getAllFuel(): Observable<Receipt[]> {
-    return this.http.get<Receipt[]>(this.GET_ALL_FUEL_URL);
+    let admin = 'admin';
+    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(admin + ':' + admin) });
+    return this.http.get<Receipt[]>(this.GET_ALL_FUEL_URL, {headers});
   }
 
   saveReceipt(receipt: Receipt): Observable<Receipt> {
-    return this.http.post<Receipt>(this.SAVE_RECEIPT_URL, receipt);
+    let admin = 'admin';
+    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(admin + ':' + admin) });
+    return this.http.post<Receipt>(this.SAVE_RECEIPT_URL, receipt, {headers});
   }
 }

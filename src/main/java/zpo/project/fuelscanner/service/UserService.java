@@ -37,7 +37,7 @@ public class UserService {
     }
 
     public boolean checkLogin(String login){
-        return !userRepository.findByLogin(login).isPresent();
+        return userRepository.findByLogin(login).isPresent();
     }
 
     public Optional<User> checkUser(String login, String password){

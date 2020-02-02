@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders } from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
 import {ReceiptStats} from "../model/receipt-stats";
@@ -16,10 +16,14 @@ export class StatsService {
   constructor(private http: HttpClient) { }
 
   getAllReceiptStats(login: string) : Observable<ReceiptStats[]> {
-    return this.http.get<ReceiptStats[]>(this.GET_ALL_RECEIPT_STATS_URL + login);
+    let admin = 'admin';
+    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(admin + ':' + admin) });
+    return this.http.get<ReceiptStats[]>(this.GET_ALL_RECEIPT_STATS_URL + login, {headers});
   }
 
   getAllCounterStats(login: string) : Observable<CounterStats[]> {
-    return this.http.get<CounterStats[]>(this.GET_ALL_COUNTER_STATS_URL + login);
+    let admin = 'admin';
+    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(admin + ':' + admin) });
+    return this.http.get<CounterStats[]>(this.GET_ALL_COUNTER_STATS_URL + login, {headers});
   }
 }

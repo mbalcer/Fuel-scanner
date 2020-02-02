@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders } from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Receipt} from "../model/receipt";
 import {environment} from "../../environments/environment";
@@ -22,10 +22,14 @@ export class OcrService {
     //   responseType: 'text'
     // });
 
-    return this.http.post<Receipt>(this.UPLOAD_FILE_URL, formdata);
+    let admin = 'admin';
+    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(admin + ':' + admin) });
+    return this.http.post<Receipt>(this.UPLOAD_FILE_URL, formdata, {headers});
   }
 
   scanReceipt(url: string): Observable<Receipt> {
-    return this.http.post<Receipt>(this.POST_SCAN_RECEIPT_URL, url);
+    let admin = 'admin';
+    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(admin + ':' + admin) });
+    return this.http.post<Receipt>(this.POST_SCAN_RECEIPT_URL, url, {headers});
   }
 }
