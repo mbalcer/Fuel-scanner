@@ -6,7 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.YearMonth;
+import java.util.Locale;
 
 @Data
 @AllArgsConstructor
@@ -30,7 +32,7 @@ public class ReceiptStats {
     }
 
     public static ReceiptStats roundTo2DecimalPlaces(ReceiptStats receiptStats) {
-        DecimalFormat df = new DecimalFormat("#.##");
+        DecimalFormat df = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.ENGLISH));
 
         receiptStats.setLitres(Double.valueOf(df.format(receiptStats.getLitres())));
         receiptStats.setCost(Double.valueOf(df.format(receiptStats.getCost())));

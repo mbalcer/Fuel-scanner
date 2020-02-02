@@ -8,7 +8,9 @@ import zpo.project.fuelscanner.service.StatsService;
 import zpo.project.fuelscanner.service.UserService;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @RestController
@@ -26,7 +28,7 @@ public class StatsController {
         this.userService = userService;
 
         //Round to 2 decimal places
-        df = new DecimalFormat("#.##");
+        df = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.ENGLISH));
     }
 
     @GetMapping("/receiptStats/{login}")

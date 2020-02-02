@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
+import java.util.Locale;
 
 @Data
 @AllArgsConstructor
@@ -47,7 +49,7 @@ public class CounterStats {
     }
 
     public static CounterStats roundTo2DecimalPlaces(CounterStats counterStats) {
-        DecimalFormat df = new DecimalFormat("#.##");
+        DecimalFormat df = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.ENGLISH));
 
         counterStats.setDistanceTravelled(Double.valueOf(df.format(counterStats.getDistanceTravelled())));
         counterStats.setFuelConsumed(Double.valueOf(df.format(counterStats.getFuelConsumed())));
