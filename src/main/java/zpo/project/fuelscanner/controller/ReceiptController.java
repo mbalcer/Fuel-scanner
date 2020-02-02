@@ -21,9 +21,9 @@ public class ReceiptController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/all")
-    public List<Receipt> getReceipts() {
-        List<Receipt> receiptList = receiptService.getReceipts();
+    @GetMapping("/all/{login}")
+    public List<Receipt> getReceipts(@PathVariable String login) {
+        List<Receipt> receiptList = receiptService.getReceiptsByUser(login);
         return receiptList;
     }
 

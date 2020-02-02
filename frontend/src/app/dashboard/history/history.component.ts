@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Receipt} from "../../model/receipt";
 import {ReceiptService} from "../../service/receipt.service";
+import {AuthenticationService} from "../../service/authentication.service";
+import {User} from "../../model/user";
 
 @Component({
   selector: 'app-history',
@@ -9,27 +11,27 @@ import {ReceiptService} from "../../service/receipt.service";
 })
 export class HistoryComponent implements OnInit {
   dataSource : Receipt[] = [];
-  constructor(private fuelSumService: ReceiptService) {
-    fuelSumService.getAllFuel().subscribe(n => {
-      this.dataSource = n;
+  user: User = {
+    login: '',
+    name: '',
+    password: '',
+    email: ''
+  };
+  constructor(private fuelSumService: ReceiptService, private userService: AuthenticationService) {
+    userService.getUser().subscribe(n => {
+        this.user = n;
+        this.getHistory();
     });
+
   }
 
   ngOnInit() {
   }
 
-}
+  getHistory() {
+    this.fuelSumService.getAllFuel(this.user.login).subscribe(n => {
+      this.dataSource = n;
+    });
+  }
 
-export interface ReceiptScan {
-  date: string,
-  litres: number,
-  costPerLitre: number,
-  costForAll: number
 }
-
-const EXAMPLE_DATA: ReceiptScan[] = [
-  {date: "03/12/2019", litres: 7.65, costPerLitre: 5.02, costForAll: 38.40},
-  {date: "11/12/2019", litres: 10.0, costPerLitre: 5.08, costForAll: 50.80},
-  {date: "21/12/2019", litres: 8.24, costPerLitre: 5.00, costForAll: 41.20},
-  {date: "28/12/2019", litres: 16.21, costPerLitre: 5.05, costForAll: 81.86}
-];

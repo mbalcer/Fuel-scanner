@@ -6,8 +6,8 @@ import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import zpo.project.fuelscanner.model.Receipt;
+import zpo.project.fuelscanner.model.User;
 import zpo.project.fuelscanner.repository.ReceiptRepository;
 
 import java.math.BigDecimal;
@@ -24,8 +24,16 @@ public class ReceiptService {
     @Autowired
     private ReceiptRepository receiptRepository;
 
+    @Autowired
+    private UserService userService;
+
     public List<Receipt> getReceipts() {
         return receiptRepository.findAll(Sort.by(Sort.Order.desc("id")));
+    }
+
+    public List<Receipt> getReceiptsByUser(String login) {
+        User user = userService.getUserByLogin(login).get();
+        return receiptRepository.findAllByUser(user);
     }
 
     public Receipt getReceipt(long id) {
