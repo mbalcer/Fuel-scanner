@@ -13,6 +13,10 @@
       <input hidden (change)="onFileSelected($event.target.files)" #fileInput type="file" id="file">
     </div>
 
+    <div class="turned-receipt">
+      <mat-checkbox class="checkbox-turned" [(ngModel)]="turned">Czy paragon jest obrócony?</mat-checkbox>
+    </div>
+
     <div class="btn-scanner">
       <button mat-raised-button color="primary" (click)="scanReceipt()">Skanuj</button>
       <mat-progress-spinner mode="indeterminate" color="primary" *ngIf="progress" diameter="35"></mat-progress-spinner>

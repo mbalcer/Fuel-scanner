@@ -17,6 +17,7 @@ export class ScannerComponent implements OnInit {
   fileToUpload: File;
   url: string;
   progress: boolean;
+  turned: boolean;
   user: User = {
     login: '',
     name: '',
@@ -32,6 +33,7 @@ export class ScannerComponent implements OnInit {
     this.fileToUpload = null;
     this.url = '';
     this.progress = false;
+    this.turned = false;
   }
 
   ngOnInit() {

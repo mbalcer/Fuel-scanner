@@ -10,17 +10,21 @@ h1, .or {
   text-align: center;
 }
 
-.url-receipt {
+.url-receipt, .turned-receipt {
   width: 80%;
   margin: 0 10%;
 }
 
-.upload-file {
+.upload-file{
   margin: 0 10%;
 }
 
-.btn-upload-file {
+.btn-upload-file, .edit-field, .btn-scanner > button {
   margin-left: 1em;
+}
+
+.turned-receipt{
+  margin: 1em 10%;
 }
 
 .btn-scanner {
@@ -30,14 +34,6 @@ h1, .or {
   flex-direction: row-reverse;
 }
 
-.btn-scanner > button {
-  margin-left: 1em;
-}
-
 .recognize-list {
   margin: 3em 10%;
-}
-
-.edit-field {
-  margin-left: 1em;
 }
