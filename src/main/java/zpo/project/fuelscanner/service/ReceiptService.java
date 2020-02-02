@@ -66,12 +66,12 @@ public class ReceiptService {
         return receipt;
     }
 
-    private static MultiValuedMap<Double, Double> getCount(final String str) {
+    public static MultiValuedMap<Double, Double> getCount(final String str) {
         final Pattern finalPrice = Pattern.compile("\\s*PLN.?([\\d+]{1,5}\\.?[\\d]{0,5})", Pattern.DOTALL);
 
         //final Pattern litres = Pattern.compile("\\b\\S?LEJ \\S?AP\\S?DOW\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bVERVA 95\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bDIESEL\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bVERVA 98\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bBENZYNA\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})|\\bGAZ LPG\\D*\\(?\\d?\\)?\\s*\\D*\\b\\s*([\\d+]{1,5}\\.?[\\d]{0,5})"); // w tym przypadku dodamy wiecej nazw
-        final Pattern litres = Pattern.compile("([\\d+]{1,5}\\s?\\.?,?\\s?[\\d]{0,5})\\s?[L]?\\s?[x+*e]+", Pattern.CASE_INSENSITIVE);
-        final Pattern pricePerLitres = Pattern.compile("\\d+\\s?[x+*e]+\\s*([\\d+]{1,5}\\s?\\.?,?\\s?[\\d]{0,5})", Pattern.CASE_INSENSITIVE);
+        final Pattern litres = Pattern.compile("([\\d+]{1,5}\\s?\\.?,?\\s?[\\d]{0,5})\\s?[L]?\\s?[x+*]+", Pattern.CASE_INSENSITIVE);
+        final Pattern pricePerLitres = Pattern.compile("\\d+\\s?[x+*]+\\s*([\\d+]{1,5}\\s?\\.?,?\\s?[\\d]{0,5})", Pattern.CASE_INSENSITIVE);
         final MultiValuedMap<Double, Double> countValues = new ArrayListValuedHashMap<>();
         final Matcher matcher = finalPrice.matcher(str); //price
         final Matcher matcher2 = litres.matcher(str); //litres
@@ -79,13 +79,13 @@ public class ReceiptService {
         while (matcher2.find() && matcher3.find()) {
             System.out.println(matcher3.group());
             // countValues.put(Double.parseDouble(matcher2.group().replaceAll("\\b\\S?LEJ \\S?AP\\S?DOW\\D*\\(?\\d?\\)?\\s*\\D*\\b|\\bBENZYNA\\D*\\(?\\d?\\)?\\s*\\D*\\b|\\bVERVA 98\\D*\\(?\\d?\\)?\\s*\\D*\\b|\\bDIESEL\\D*\\(?\\d?\\)?\\s*\\D*\\b|\\bGAZ LPG\\D*\\(?\\d?\\)?\\s*\\D*\\b\\b|\\bVERVA 95\\D*\\(?\\d?\\)?\\s*\\D*\\b","")),Double.parseDouble(matcher3.group(1)));// w tym przypadku dodamy wiecej nazw
-            countValues.put(Double.parseDouble(matcher2.group().replaceAll("\\s?[L]?\\s?[x+*e]+", "").replace(",", ".")), Double.parseDouble(matcher3.group(1).replace(",", ".")));
+            countValues.put(Double.parseDouble(matcher2.group().replaceAll("\\s?[L]?\\s?[x+*]+", "").replace(",", ".")), Double.parseDouble(matcher3.group(1).replace(",", ".")));
 
         }
         return countValues;
     }
 
-    private static LocalDate getDate(String str) {
+    public static LocalDate getDate(String str) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         final Pattern date = Pattern.compile("\\d{2}-\\d{2}-\\d{4}", Pattern.CASE_INSENSITIVE);

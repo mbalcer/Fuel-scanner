@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 
 @Data
@@ -43,6 +44,19 @@ public class CounterStats {
         } else {
             this.averageCostPerLitre = 0.0;
         }
+    }
+
+    public static CounterStats roundTo2DecimalPlaces(CounterStats counterStats) {
+        DecimalFormat df = new DecimalFormat("#.##");
+
+        counterStats.setDistanceTravelled(Double.valueOf(df.format(counterStats.getDistanceTravelled())));
+        counterStats.setFuelConsumed(Double.valueOf(df.format(counterStats.getFuelConsumed())));
+        counterStats.setAvgFuelConsumedOn100km(Double.valueOf(df.format(counterStats.getAvgFuelConsumedOn100km())));
+        counterStats.setLitresBought(Double.valueOf(df.format(counterStats.getLitresBought())));
+        counterStats.setCostLitresBought(Double.valueOf(df.format(counterStats.getCostLitresBought())));
+        counterStats.setAverageCostPerLitre(Double.valueOf(df.format(counterStats.getAverageCostPerLitre())));
+
+        return counterStats;
     }
 }
 

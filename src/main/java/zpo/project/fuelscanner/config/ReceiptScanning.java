@@ -15,7 +15,7 @@ import static org.bytedeco.javacpp.opencv_imgproc.*;
 
 @Component
 public class ReceiptScanning {
-    public opencv_core.IplImage beforeOcr(String path){
+    public opencv_core.IplImage beforeSmooth(String path){
         System.out.println("jestem tutaj beforeOcr");
         final File receiptImageFile = new File(path);
         final String receiptImagePathFile = receiptImageFile.getAbsolutePath();
@@ -139,7 +139,7 @@ public class ReceiptScanning {
         return destImage;
     }
 
-    public IplImage cleanImageSmoothingForOCR(IplImage srcImage)
+    public File cleanImageSmoothingForOCR(IplImage srcImage)
     {
         IplImage destImage = cvCreateImage(cvGetSize(srcImage),IPL_DEPTH_8U,1);
         cvCvtColor(srcImage,destImage,CV_BGR2GRAY);
@@ -150,6 +150,6 @@ public class ReceiptScanning {
        // cvAdaptiveThreshold(destImage, 255,CV_ADAPTIVE_THRESH_GAUSSIAN_C, CV_THRESH_BINARY, 31);
         File f = new File(System.getProperty("user.home")+File.separator+"afterSmoothing.jpeg");
         cvSaveImage(f.getAbsolutePath(),destImage);
-        return destImage;
+        return f;
     }
 }

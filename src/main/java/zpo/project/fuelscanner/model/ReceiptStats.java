@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.text.DecimalFormat;
 import java.time.YearMonth;
 
 @Data
@@ -26,5 +27,17 @@ public class ReceiptStats {
         this.minCostPerLitre = minCostPerLitre;
         this.maxCostPerLitre = maxCostPerLitre;
         this.averageCostPerLitre = cost / litres;
+    }
+
+    public static ReceiptStats roundTo2DecimalPlaces(ReceiptStats receiptStats) {
+        DecimalFormat df = new DecimalFormat("#.##");
+
+        receiptStats.setLitres(Double.valueOf(df.format(receiptStats.getLitres())));
+        receiptStats.setCost(Double.valueOf(df.format(receiptStats.getCost())));
+        receiptStats.setAverageCostPerLitre(Double.valueOf(df.format(receiptStats.getAverageCostPerLitre())));
+        receiptStats.setMinCostPerLitre(Double.valueOf(df.format(receiptStats.getMinCostPerLitre())));
+        receiptStats.setMaxCostPerLitre(Double.valueOf(df.format(receiptStats.getMaxCostPerLitre())));
+
+        return receiptStats;
     }
 }
