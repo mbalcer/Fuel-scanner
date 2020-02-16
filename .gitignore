@@ -42,3 +42,5 @@ frontend/dist
 
 
 src/main/resources/files/
+*.db
+package-lock.json
